@@ -9,7 +9,10 @@
 
 <div align="center">
    <h1 align="center">📖 Serverless Cloud Dictionary</h1>
-   <p align="center"> <strong>A Full-Stack Serverless Web Application for Instant Cloud Terminology Lookup</strong> <br /> <a href="#about-the-project"><strong>Explore the docs »</strong></a> </p>
+   <p align="center"> 
+   <img src="assets/aws-serverless-cloud-directory-cover.jpg" alt="aws-serverless-cloud-directory-cover" width="800" /><br /> 
+   <strong>A Full-Stack Serverless Web Application for Instant Cloud Terminology Lookup</strong> <br /> 
+   <a href="#about-the-project"><strong>Explore the docs »</strong></a> </p>
 </div>
 <details>
    <summary>Table of Contents</summary>
@@ -56,6 +59,9 @@
 </ul>
 <div align="right"><a href="#readme-top">↑ Back to Top</a></div>
 <h2 id="architecture">Architecture</h2>
+<img src="assets/aws-terraform-cloud-dictionary.jpg" alt="architecture-diagram" width="800" />
+<p>The architecture utilizes Terraform Cloud as the remote execution engine. Upon a successful apply, a local-exec provisioner sends a secure webhook to AWS Amplify. This bridges the gap between the backend infrastructure (API Gateway/Lambda) and the React frontend, ensuring that the latest REACT_APP_API_URL is injected into the production build immediately.</p>
+<p>The null_resource trigger ensures that any infrastructure-level changes to the API Gateway endpoint are automatically propagated to the React frontend via a secure Webhook POST request, maintaining a zero-manual-intervention CI/CD pipeline.</p>
 <ol>
     <li><strong>Request:</strong> User enters a term in the React UI.</li>
     <li><strong>Normalization:</strong> Both Frontend and Lambda convert input to UPPERCASE to ensure case-insensitive matching against the database.</li>
@@ -109,19 +115,110 @@
     <li>A GitHub Personal Access Token (for Amplify access).</li>
 </ul>
 
+<h3>Terraform State Management</h3>
+<p>Select one:</p>
+<ol>
+   <li>Terraform Cloud</li>
+   <li>Terraform Local CLI</li>
+</ol>
+
+<h4>Terraform Cloud Configuration</h4>
+<p>If you choose Terraform Cloud, please follow the steps below:</p>
+<ol>
+   <li>Create a new <strong>Workspace</strong> in Terraform Cloud.</li>
+   <li>
+        In the Variables tab, add the following <strong>Terraform Variables:</strong>
+        <ul>
+            <li><strong>TF_VAR_github_token</strong>: (from prerequisites, marked as Sensitive).</li>
+        </ul>
+   </li>
+   <li>
+    Add the following <strong>Environment Variables</strong> (AWS Credentials):
+    <ul>
+      <li><code>AWS_ACCESS_KEY_ID</code></li>
+      <li><code>AWS_SECRET_ACCESS_KEY</code></li>
+   </ul>
+   </li>
+</ol>
+
+<h4>Terraform Local CLI Configuration</h4>
+<p>If you choose Terraform Local CLI, please follow the steps below:</p>
+<ol>
+   <li>
+      Comment the <code>backend</code> block in <code>terraform.tf</code>:
+      <pre># backend "remote" {
+#   hostname     = "app.terraform.io"
+#   organization = "&lt;your-terraform-organization-name&gt;"
+#   workspaces {
+#     name = "&lt;your-terraform-workspace-name&gt;"
+#   }
+# }</pre>
+   </li>
+   <li>
+    Add the following <strong>Environment Variables</strong> (AWS Credentials):
+    <pre>git bash command:
+export AWS_ACCESS_KEY_ID=&lt;your-aws-access-key-id&gt;
+export AWS_SECRET_ACCESS_KEY=&lt;your-aws-secret-access-key&gt;
+export TF_VAR_github_token=&lt;your-github-token&gt;
+</ol>
+
 <h3>Deployment</h3>
 <ol>
    <li>Clone the repository.</li>
-   <li>Initialize Terraform: <code>terraform init</code></li>
-   <li>Deploy the stack: <code>terraform apply -var="github_token=your_token"</code></li>
+   <li><strong>Terraform Cloud</strong> → <strong>Initialize & Apply:</strong> Push your code to GitHub. Terraform Cloud will automatically detect the change, run a <code>plan</code>, and wait for your approval.</li>
+   <li><strong>Terraform CLI</strong> → <strong>Initialize & Apply:</strong> Run <code>terraform init</code> → <code>terraform plan</code> → <code>terraform apply</code>, and wait for your approval.</li>
+   <li>
+      <strong>The Webhook Handshake:</strong> Once you approve the plan, Terraform will create the backend. It will then automatically trigger the <strong>AWS Amplify Webhook</strong> to start the frontend build.<br>
+      <img src="assets/amplify-deployment-log.png" alt="amplify-deployment-log" width="800" />
+   </li>
+   <li>
+      <strong>Pro-Tip:</strong>  Local Development To test changes without deploying to production, create a <code>.env.local</code> file in the <code>frontend/</code> directory. Populate it with the outputs from your Terraform apply (User Pool IDs, S3 Bucket name, etc.) to link your local dev server to your live AWS resources
+   </li>
 </ol>
+
+<h3 id="database-seeding">🗄️ Database Seeding</h3>
+<p> 
+    The infrastructure automatically populates <strong>30 core cloud computing terms</strong> into the DynamoDB table during the <code>terraform apply</code> process. This ensures the application is ready for immediate use upon deployment. 
+</p>
+<p>
+    Data is injected using the <code>aws_dynamodb_table_item</code> resource with a <code>for_each</code> loop, mapping terms to their definitions with automated <strong>UPPERCASE</strong> normalization to ensure consistent search hits. 
+</p>
+<img src="assets/dynamodb-items.png" alt="dynamodb-items" width="800" />
 <div align="right"><a href="#readme-top">↑ Back to Top</a></div>
-<h2 id="usage">Usage & Testing</h2>
+
+<h2 id="usage">🧪 Usage & Testing</h2>
+<p> To verify the end-to-end functionality of the pipeline, follow these testing steps: </p>
 <ol>
-   <li><strong>Access the App:</strong> Use the Amplify URL provided in the Terraform outputs.</li>
-   <li><strong>Search:</strong> Enter a term like <code>S3</code> or <code>nat gateway</code>. Note how the app handles spaces and casing automatically.</li>
-   <li><strong>Verify Logs:</strong> Check <strong>CloudWatch Log Groups</strong> at <code>/aws/lambda/CloudDictionaryHandler</code> to see the search execution path and hits/misses.</li>
-   <li><strong>Trigger Build:</strong> Change an environment variable in <code>amplify.tf</code> and run <code>terraform apply</code>; observe the <code>null_resource</code> triggering a fresh Amplify deployment.</li>
+   <li>
+        <strong>Access the App:</strong> Use the Amplify URL provided in the Terraform outputs.<br>
+        <img src="assets/cloud-dictionary.png" alt="cloud-dictionary" width="800" />
+   </li>
+   <li>
+        <strong>Test Existing Terms:</strong> Search for any of the 35 pre-loaded terms (e.g., <code>S3</code>, <code>EC2</code>, or <code>NAT Gateway</code>). The app will return the definition and update the browser tab title.<br>
+        <img src="assets/search-s3.png" alt="search-s3" width="800" /><br>
+        <img src="assets/search-nat-gateway.png" alt="search-nat-gateway" width="800" />
+    </li>
+   <li>
+        <strong>Case-Insensitivity Check:</strong> Try searching for <code>s3</code> (lowercase) or <code>nAt GaTeWaY</code> (mixed case). The system will normalize these to match the database records.
+    </li>
+    <li>
+        <strong>Error Handling:</strong> Search for a term that does <strong>not</strong> exist in the dictionary (e.g., <code>Windows 95</code>). 
+        <ul>
+            <li>
+                <strong>Frontend Behavior:</strong> The UI will display a "Term not found" message within a styled error box.<br>
+                <img src="assets/term-not-found.png" alt="term-not-found" width="800" /><br>
+                <img src="assets/api-fail.png" alt="api-fail" width="400" />
+                <img src="assets/api-fail-response.png" alt="api-fail-response" width="400" />
+            </li>
+            <li><strong>Backend Behavior:</strong> The Lambda function will catch the missing item and return a <code>404 Not Found</code> status code to the client.</li>
+        </ul>
+    </li>
+   <li>
+        <strong>Verify Logs:</strong> Check <strong>CloudWatch Log Groups</strong> at <code>/aws/lambda/CloudDictionaryHandler</code> to see the search execution path and hits/misses.<br>
+        <img src="assets/lambda-cloudwatch-log.png" alt="lambda-cloudwatch-log" width="800" /><br>
+        <img src="assets/api-result-success.png" alt="api-result-success" width="400" />
+        <img src="assets/api-response.png" alt="api-response" width="400" />
+    </li>
 </ol>
 <div align="right"><a href="#readme-top">↑ Back to Top</a></div>
 <h2 id="roadmap">Roadmap</h2>
