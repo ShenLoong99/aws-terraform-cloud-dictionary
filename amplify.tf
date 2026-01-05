@@ -4,6 +4,9 @@ resource "aws_amplify_app" "dictionary_frontend" {
   repository   = var.github_repo
   access_token = var.github_token
 
+  # Ensure the app itself doesn't try to auto-create and build branches
+  enable_branch_auto_build = false
+
   # Auto-build settings
   build_spec = <<-EOT
     version: 1
@@ -29,4 +32,10 @@ resource "aws_amplify_app" "dictionary_frontend" {
 resource "aws_amplify_branch" "main" {
   app_id      = aws_amplify_app.dictionary_frontend.id
   branch_name = "main"
+
+  # DISABLE AUTO BUILD HERE
+  enable_auto_build = false
+
+  # Optional: Framework hint helps Amplify environment setup
+  framework = "React"
 }
