@@ -12,26 +12,7 @@ resource "aws_amplify_app" "dictionary_frontend" {
   }
 
   # Auto-build settings
-  build_spec = <<-EOT
-    version: 1
-    frontend:
-      phases:
-        preBuild:
-          commands:
-            - cd frontend
-            - npm install --no-audit --no-fund --loglevel=error
-        build:
-          commands:
-            - echo "REACT_APP_API_URL=$REACT_APP_API_URL" >> .env
-            - npm run build
-      artifacts:
-        baseDirectory: frontend/build
-        files:
-          - '**/*'
-      cache:
-        paths:
-          - frontend/node_modules/**/*
-  EOT
+  build_spec = file("amplify.yml")
 }
 
 resource "aws_amplify_branch" "main" {
@@ -40,4 +21,20 @@ resource "aws_amplify_branch" "main" {
 
   # Optional: Framework hint helps Amplify environment setup
   framework = "React"
+}
+
+resource "aws_amplify_webhook" "build_webhook" {
+  app_id      = aws_amplify_app.dictionary_frontend.id
+  branch_name = aws_amplify_branch.main.branch_name
+  description = "Triggered by Terraform Cloud"
+}
+
+resource "null_resource" "curl_webhook" {
+  triggers = {
+    api_url = aws_api_gateway_stage.prod.invoke_url
+  }
+
+  provisioner "local-exec" {
+    command = "curl -X POST -d {} '${aws_amplify_webhook.build_webhook.url}'"
+  }
 }
