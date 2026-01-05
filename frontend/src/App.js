@@ -10,6 +10,8 @@ function App() {
   const API_URL = process.env.REACT_APP_API_URL;
 
   const handleSearch = async () => {
+    if (!term.trim()) return; // Don't search for empty strings
+
     setLoading(true);
     setDefinition('');
 
@@ -20,7 +22,7 @@ function App() {
     const formattedTerm = term.trim().toUpperCase();
 
     try {
-      const response = await fetch(`${API_URL}?term=${formattedTerm}`);
+      const response = await fetch(`${API_URL}?term=${encodeURIComponent(formattedTerm)}`);
       const data = await response.json();
       
       if (response.ok) {
