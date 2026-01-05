@@ -21,7 +21,7 @@ resource "aws_dynamodb_table_item" "dictionary_items" {
   hash_key   = "Term" # Changed from "term" to "Term"
 
   item = jsonencode({
-    "Term"       = { "S" : each.key } # Use capital T
+    "Term"       = { "S" : upper(each.key) } # Use capital T
     "Definition" = { "S" : each.value }
   })
 }
