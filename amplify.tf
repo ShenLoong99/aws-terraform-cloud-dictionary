@@ -17,13 +17,13 @@ resource "aws_amplify_app" "dictionary_frontend" {
         preBuild:
           commands:
             - cd frontend
-            - npm install
+            - npm ci --no-audit --no-fund --loglevel=error
         build:
           commands:
             - echo "REACT_APP_API_URL=$REACT_APP_API_URL" >> .env
             - npm run build
       artifacts:
-        baseDirectory: build
+        baseDirectory: frontend/build
         files:
           - '**/*'
       cache:
