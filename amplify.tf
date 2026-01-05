@@ -19,7 +19,7 @@ resource "aws_amplify_branch" "main" {
   app_id      = aws_amplify_app.dictionary_frontend.id
   branch_name = "main"
 
-  enable_auto_build = false
+  enable_auto_build = true
 
   # Optional: Framework hint helps Amplify environment setup
   framework = "React"
