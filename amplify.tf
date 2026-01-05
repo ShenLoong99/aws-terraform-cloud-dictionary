@@ -4,8 +4,6 @@ resource "aws_amplify_app" "dictionary_frontend" {
   repository   = var.github_repo
   access_token = var.github_token
 
-  enable_auto_branch_creation = true
-
   # Pass the API URL from Terraform to Amplify
   environment_variables = {
     REACT_APP_API_URL   = "${aws_api_gateway_stage.prod.invoke_url}/search"
