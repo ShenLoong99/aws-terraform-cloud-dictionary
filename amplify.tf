@@ -40,6 +40,6 @@ resource "null_resource" "curl_webhook" {
   }
 
   provisioner "local-exec" {
-    command = "curl -X POST -d {} '${aws_amplify_webhook.build_webhook.url}'"
+    command = "curl -X POST -d {} '${aws_amplify_webhook.build_webhook.url}&operation=startbuild' -H 'Content-Type: application/json'"
   }
 }
