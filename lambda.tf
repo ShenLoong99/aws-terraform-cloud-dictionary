@@ -1,0 +1,49 @@
+# Create a ZIP file of the python code
+data "archive_file" "lambda_zip" {
+  type        = "zip"
+  source_file = "${path.module}/lambda/index.py"
+  output_path = "${path.module}/lambda/lambda_function.zip"
+}
+
+# The Lambda function retrieves the definition for a given search term.
+resource "aws_lambda_function" "dictionary_handler" {
+  filename         = data.archive_file.lambda_zip.output_path
+  function_name    = "CloudDictionaryHandler"
+  role             = aws_iam_role.lambda_exec_role.arn
+  handler          = "index.lambda_handler"
+  runtime          = "python3.11"
+  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+
+  environment {
+    variables = {
+      TABLE_NAME = aws_dynamodb_table.dictionary_table.name
+    }
+  }
+}
+
+# IAM Role for Lambda
+resource "aws_iam_role" "lambda_exec_role" {
+  name = "cloud_dictionary_lambda_role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Action    = "sts:AssumeRole"
+      Effect    = "Allow"
+      Principal = { Service = "lambda.amazonaws.com" }
+    }]
+  })
+}
+
+# Policy to allow Lambda to read from DynamoDB
+resource "aws_iam_role_policy" "lambda_dynamo_policy" {
+  role = aws_iam_role.lambda_exec_role.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect   = "Allow"
+      Action   = ["dynamodb:GetItem", "dynamodb:Query"]
+      Resource = [aws_dynamodb_table.dictionary_table.arn]
+    }]
+  })
+}
