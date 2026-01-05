@@ -10,7 +10,7 @@
 <div align="center">
    <h1 align="center">📖 Serverless Cloud Dictionary</h1>
    <p align="center"> 
-   <img src="assets/cover.jpg" alt="aws-serverless-cloud-directory-cover" width="800" /><br /> 
+   <img src="assets/cover.png" alt="aws-serverless-cloud-directory-cover" width="800" /><br /> 
    <strong>A Full-Stack Serverless Web Application for Instant Cloud Terminology Lookup</strong> <br /> 
    <a href="#about-the-project"><strong>Explore the docs »</strong></a> </p>
 </div>
