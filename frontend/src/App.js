@@ -12,11 +12,16 @@ function App() {
   const handleSearch = async () => {
     setLoading(true);
     setDefinition('');
+
+    // Update the tab title dynamically!
+    document.title = `Searching: ${term}...`;
+
     try {
       const response = await fetch(`${API_URL}?term=${term}`);
       const data = await response.json();
       
       if (response.ok) {
+        document.title = `${term} | Cloud Dictionary`; // Title when found
         setDefinition(data.Definition);
       } else {
         setDefinition(data.message || "Term not found.");
