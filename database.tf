@@ -4,13 +4,13 @@ resource "aws_dynamodb_table" "dictionary_table" {
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "Term"
 
+  point_in_time_recovery {
+    enabled = true
+  }
+
   attribute {
     name = "Term"
     type = "S"
-  }
-
-  tags = {
-    Project = "CloudDictionary"
   }
 }
 

@@ -36,6 +36,7 @@ resource "aws_lambda_permission" "apigw_lambda" {
 
 resource "aws_api_gateway_deployment" "prod" {
   rest_api_id = aws_api_gateway_rest_api.dictionary_api.id
+  description = "Deployed via Terraform on ${timestamp()}"
 
   triggers = {
     redeployment = sha1(jsonencode(aws_api_gateway_integration.lambda_integration))
