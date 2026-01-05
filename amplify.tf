@@ -21,7 +21,7 @@ resource "aws_amplify_branch" "main" {
   app_id      = aws_amplify_app.dictionary_frontend.id
   branch_name = "main"
 
-  enable_auto_build = false
+  enable_auto_build = true
 
   # Optional: Framework hint helps Amplify environment setup
   framework = "React"
@@ -33,12 +33,12 @@ resource "aws_amplify_webhook" "build_webhook" {
   description = "Triggered by Terraform Cloud"
 }
 
-resource "null_resource" "curl_webhook" {
-  triggers = {
-    api_url = aws_api_gateway_stage.prod.invoke_url
-  }
+# resource "null_resource" "curl_webhook" {
+#   triggers = {
+#     api_url = aws_api_gateway_stage.prod.invoke_url
+#   }
 
-  provisioner "local-exec" {
-    command = "curl -X POST -d {} '${aws_amplify_webhook.build_webhook.url}'"
-  }
-}
+#   provisioner "local-exec" {
+#     command = "curl -X POST -d {} '${aws_amplify_webhook.build_webhook.url}'"
+#   }
+# }
