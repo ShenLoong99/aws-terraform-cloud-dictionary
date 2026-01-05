@@ -36,7 +36,7 @@ resource "aws_amplify_webhook" "build_webhook" {
 resource "null_resource" "curl_webhook" {
   triggers = {
     always_run = timestamp()                                                   # This changes every single time you run terraform apply
-    env_vars   = jsonencode(aws_amplify_app.bucket_list.environment_variables) # Keep this so you can track if vars changed in the logs
+    env_vars   = jsonencode(aws_amplify_app.dictionary_frontend.environment_variables) # Keep this so you can track if vars changed in the logs
   }
 
   provisioner "local-exec" {
