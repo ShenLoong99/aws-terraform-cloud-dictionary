@@ -13,3 +13,15 @@ resource "aws_dynamodb_table" "dictionary_table" {
     Project = "CloudDictionary"
   }
 }
+
+# Resource to insert each item into DynamoDB
+resource "aws_dynamodb_table_item" "dictionary_items" {
+  for_each   = var.cloud_terms
+  table_name = aws_dynamodb_table.dictionary_table.name
+  hash_key   = "Term" # Changed from "term" to "Term"
+
+  item = jsonencode({
+    "Term"       = { "S" : each.key } # Use capital T
+    "Definition" = { "S" : each.value }
+  })
+}
