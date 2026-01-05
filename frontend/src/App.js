@@ -35,7 +35,8 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      {/* Main background container */}
+      <div className="container"> 
         <h1>Cloud Dictionary</h1>
         <div className="search-container">
           <input 
@@ -43,18 +44,22 @@ function App() {
             placeholder="Search cloud term (e.g. S3)..." 
             value={term}
             onChange={(e) => setTerm(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSearch()} // Support Enter key
           />
           <button onClick={handleSearch} disabled={loading}>
             {loading ? 'Searching...' : 'Search'}
           </button>
         </div>
+
         {definition && (
           <div className="result-box">
-            <h3>{term}</h3>
-            <p>{definition}</p>
+            <div className="word-header">
+              <span className="word">{term}</span>
+            </div>
+            <p className="definition">{definition}</p>
           </div>
         )}
-      </header>
+      </div>
     </div>
   );
 }

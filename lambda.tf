@@ -11,8 +11,10 @@ resource "aws_lambda_function" "dictionary_handler" {
   function_name    = "CloudDictionaryHandler"
   role             = aws_iam_role.lambda_exec_role.arn
   handler          = "index.lambda_handler"
-  runtime          = "python3.11"
+  runtime          = "python3.13"
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+  timeout          = 60
+  memory_size      = 128 # Minimum RAM (cheapest/free)
 
   environment {
     variables = {
