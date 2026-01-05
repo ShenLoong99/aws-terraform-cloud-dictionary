@@ -11,6 +11,7 @@ resource "aws_amplify_app" "dictionary_frontend" {
       phases:
         preBuild:
           commands:
+            - cd frontend
             - npm install
         build:
           commands:
@@ -21,7 +22,7 @@ resource "aws_amplify_app" "dictionary_frontend" {
           - '**/*'
       cache:
         paths:
-          - node_modules/**/*
+          - frontend/node_modules/**/*
   EOT
 }
 

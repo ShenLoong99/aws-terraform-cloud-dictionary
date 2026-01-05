@@ -8,7 +8,7 @@ table_name = os.environ.get('TABLE_NAME', 'CloudDictionary')
 table = dynamodb.Table(table_name)
 
 def lambda_handler(event, context):
-    # 1. Extract the search term from the query string (?term=S3)
+    # Extract the search term from the query string (?term=S3)
     query_params = event.get('queryStringParameters')
     
     if not query_params or 'term' not in query_params:
@@ -24,7 +24,7 @@ def lambda_handler(event, context):
     search_term = query_params['term']
 
     try:
-        # 2. Query DynamoDB
+        # Query DynamoDB
         response = table.get_item(Key={'Term': search_term})
         
         if 'Item' in response:
