@@ -207,8 +207,8 @@ export TF_VAR_github_token=&lt;your-github-token&gt;
             <li>
                 <strong>Frontend Behavior:</strong> The UI will display a "Term not found" message within a styled error box.<br>
                 <img src="assets/term-not-found.png" alt="term-not-found" width="800" /><br>
-                <img src="assets/api-fail.png" alt="api-fail" width="400" />
-                <img src="assets/api-fail-response.png" alt="api-fail-response" width="400" />
+                <img src="assets/api-fail.png" alt="api-fail" width="350" />
+                <img src="assets/api-fail-response.png" alt="api-fail-response" width="350" />
             </li>
             <li><strong>Backend Behavior:</strong> The Lambda function will catch the missing item and return a <code>404 Not Found</code> status code to the client.</li>
         </ul>
@@ -216,8 +216,8 @@ export TF_VAR_github_token=&lt;your-github-token&gt;
    <li>
         <strong>Verify Logs:</strong> Check <strong>CloudWatch Log Groups</strong> at <code>/aws/lambda/CloudDictionaryHandler</code> to see the search execution path and hits/misses.<br>
         <img src="assets/lambda-cloudwatch-log.png" alt="lambda-cloudwatch-log" width="800" /><br>
-        <img src="assets/api-result-success.png" alt="api-result-success" width="400" />
-        <img src="assets/api-response.png" alt="api-response" width="400" />
+        <img src="assets/api-result-success.png" alt="api-result-success" width="350" />
+        <img src="assets/api-response.png" alt="api-response" width="350" />
     </li>
 </ol>
 <div align="right"><a href="#readme-top">↑ Back to Top</a></div>
