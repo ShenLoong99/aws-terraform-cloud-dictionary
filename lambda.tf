@@ -49,3 +49,32 @@ resource "aws_iam_role_policy" "lambda_dynamo_policy" {
     }]
   })
 }
+
+# Create the Log Group explicitly
+resource "aws_cloudwatch_log_group" "lambda_log_group" {
+  # The name MUST match this exact pattern
+  name              = "/aws/lambda/${aws_lambda_function.dictionary_handler.function_name}"
+  retention_in_days = 7 # Automatically delete logs after 7 days to save money
+}
+
+# Update the Lambda's IAM Policy
+# Ensure your Lambda role has the 'BasicExecutionRole' policy attached, 
+# or explicitly allow logging to this specific log group.
+resource "aws_iam_role_policy" "lambda_logging" {
+  name = "lambda_logging_policy"
+  role = aws_iam_role.lambda_exec_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ]
+        Effect   = "Allow"
+        Resource = "${aws_cloudwatch_log_group.lambda_log_group.arn}:*"
+      }
+    ]
+  })
+}
