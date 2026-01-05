@@ -4,6 +4,8 @@ resource "aws_amplify_app" "dictionary_frontend" {
   repository   = var.github_repo
   access_token = var.github_token
 
+  enable_auto_branch_creation = true
+
   # Pass the API URL from Terraform to Amplify
   environment_variables = {
     REACT_APP_API_URL   = "${aws_api_gateway_stage.prod.invoke_url}/search"
@@ -19,7 +21,7 @@ resource "aws_amplify_branch" "main" {
   app_id      = aws_amplify_app.dictionary_frontend.id
   branch_name = "main"
 
-  enable_auto_build = true
+  enable_auto_build = false
 
   # Optional: Framework hint helps Amplify environment setup
   framework = "React"
@@ -33,7 +35,8 @@ resource "aws_amplify_webhook" "build_webhook" {
 
 resource "null_resource" "curl_webhook" {
   triggers = {
-    api_url = aws_api_gateway_stage.prod.invoke_url
+    always_run = timestamp()                                                   # This changes every single time you run terraform apply
+    env_vars   = jsonencode(aws_amplify_app.bucket_list.environment_variables) # Keep this so you can track if vars changed in the logs
   }
 
   provisioner "local-exec" {
