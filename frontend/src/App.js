@@ -7,7 +7,7 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   // REPLACE THIS with your "api_endpoint" output from Terraform
-  const API_URL = "https://YOUR_API_ID.execute-api.us-east-1.amazonaws.com/prod/search";
+  const API_URL = process.env.REACT_APP_API_URL;
 
   const handleSearch = async () => {
     setLoading(true);

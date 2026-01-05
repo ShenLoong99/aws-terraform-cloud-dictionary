@@ -4,8 +4,10 @@ resource "aws_amplify_app" "dictionary_frontend" {
   repository   = var.github_repo
   access_token = var.github_token
 
-  # Ensure the app itself doesn't try to auto-create and build branches
-  enable_branch_auto_build = false
+  # Pass the API URL from Terraform to Amplify
+  environment_variables = {
+    REACT_APP_API_URL = "${aws_api_gateway_stage.prod.invoke_url}/search"
+  }
 
   # Auto-build settings
   build_spec = <<-EOT
@@ -18,6 +20,7 @@ resource "aws_amplify_app" "dictionary_frontend" {
             - npm install
         build:
           commands:
+            - echo "REACT_APP_API_URL=$REACT_APP_API_URL" >> .env
             - npm run build
       artifacts:
         baseDirectory: build
@@ -32,9 +35,6 @@ resource "aws_amplify_app" "dictionary_frontend" {
 resource "aws_amplify_branch" "main" {
   app_id      = aws_amplify_app.dictionary_frontend.id
   branch_name = "main"
-
-  # DISABLE AUTO BUILD HERE
-  enable_auto_build = false
 
   # Optional: Framework hint helps Amplify environment setup
   framework = "React"
