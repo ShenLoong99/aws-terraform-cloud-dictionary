@@ -31,12 +31,12 @@ resource "aws_amplify_webhook" "build_webhook" {
   description = "Triggered by Terraform Cloud"
 }
 
-# resource "null_resource" "curl_webhook" {
-#   triggers = {
-#     api_url = aws_api_gateway_stage.prod.invoke_url
-#   }
+resource "null_resource" "curl_webhook" {
+  triggers = {
+    api_url = aws_api_gateway_stage.prod.invoke_url
+  }
 
-#   provisioner "local-exec" {
-#     command = "curl -X POST -d {} '${aws_amplify_webhook.build_webhook.url}'"
-#   }
-# }
+  provisioner "local-exec" {
+    command = "curl -X POST -d {} '${aws_amplify_webhook.build_webhook.url}'"
+  }
+}
