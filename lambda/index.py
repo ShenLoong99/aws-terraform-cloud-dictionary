@@ -21,10 +21,11 @@ def lambda_handler(event, context):
             'body': json.dumps({'error': 'Please provide a search term'})
         }
 
-    search_term = query_params['term']
+    # Normalize the term: Trim spaces and convert to uppercase to match DB
+    search_term = query_params['term'].strip().upper()
 
     try:
-        # Query DynamoDB
+        # Query DynamoDB using the exact case-sensitive key 'Term'
         response = table.get_item(Key={'Term': search_term})
         
         if 'Item' in response:
@@ -37,13 +38,14 @@ def lambda_handler(event, context):
                 'body': json.dumps(response['Item'])
             }
         else:
+            # Explicitly return a message the frontend can display
             return {
                 'statusCode': 404,
                 'headers': {
                     'Access-Control-Allow-Origin': '*',
                     'Content-Type': 'application/json'
                 },
-                'body': json.dumps({'message': 'Term not found in dictionary'})
+                'body': json.dumps({'message': f"'{search_term}' not found in dictionary."})
             }
 
     except Exception as e:

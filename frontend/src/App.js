@@ -16,13 +16,17 @@ function App() {
     // Update the tab title dynamically!
     document.title = `Searching: ${term}...`;
 
+    // Format term to match DynamoDB (e.g., s3 -> S3)
+    const formattedTerm = term.trim().toUpperCase();
+
     try {
-      const response = await fetch(`${API_URL}?term=${term}`);
+      const response = await fetch(`${API_URL}?term=${formattedTerm}`);
       const data = await response.json();
       
       if (response.ok) {
-        document.title = `${term} | Cloud Dictionary`; // Title when found
-        setDefinition(data.Definition);
+        document.title = `${term} | Cloud Dictionary`;
+        // Access data.Definition with capital D as defined in Terraform
+        setDefinition(data.Definition || "Definition field missing in database.");
       } else {
         setDefinition(data.message || "Term not found.");
       }
