@@ -93,39 +93,54 @@
 </ol>
 <div align="right"><a href="#readme-top">↑ Back to Top</a></div>
 <h2 id="file-structure">File Structure</h2>
-<pre>AWS-TERRAFORM-CLOUD-DICTIONARY/
-├── 📁 .github/                   # GitHub Action workflows or metadata
-├── 📁 .terraform/                # Terraform working directory (initialized providers)
-├── 📁 assets/                    # Project documentation images and diagrams
-├── 📁 frontend/                  # React.js web application [cite: 19, 20]
-│   ├── 📁 node_modules/          # Frontend dependencies
-│   ├── 📁 public/                # Static assets (favicon, index.html)
-│   ├── 📁 src/                   # React source code
-│   │   ├── App.css               # Styling for the dictionary UI
-│   │   ├── App.js                # Main logic for search and API calls
-│   │   ├── index.css             # Global base styles
-│   │   └── index.js              # React entry point
-│   ├── .gitignore                # Frontend-specific git ignore rules
-│   ├── package-lock.json         # Locked versions of npm dependencies
-│   ├── package.json              # Frontend scripts and dependency list
-│   └── README.md                 # Frontend-specific documentation
-├── 📁 lambda/                    # Serverless backend logic [cite: 26]
-│   ├── index.py                  # Python script for dictionary search logic
-│   ├── lambda_function.zip       # Deployment package created by Terraform [cite: 26]
-│   └── .gitignore                # Lambda-specific git ignore rules
-├── .terraform.lock.hcl           # Terraform dependency lock file
-├── amplify.tf                    # AWS Amplify hosting & build triggers
-├── amplify.yml                   # Amplify build specification
-├── api_gateway.tf                # REST API endpoints & Lambda integration [cite: 22, 23]
-├── database.tf                   # DynamoDB table & item definitions [cite: 33, 34]
-├── lambda.tf                     # Lambda function config & IAM roles [cite: 27]
-├── main.tf                       # AWS provider configuration
-├── outputs.tf                    # Defined output values (API URLs, etc.)
-├── README.template.md            # Template for generating project documentation
-├── terraform.tf                  # Terraform version requirements
-├── terraform.tfstate             # Current state of your live infrastructure
-├── terraform.tfstate.backup      # Previous state for recovery
-└── variables.tf                  # Input variables for GitHub tokens and regions
+<pre>aws-terraform-cloud-dictionary/
+aws-terraform-cloud-dictionary/
+├── 📁 .github/                        # GitHub Action workflows for CI/CD
+│   └── workflows/                     # CI/CD Pipeline Definitions
+│       ├── cd.yml                     # Production Deployment (OIDC + S3 Sync)
+│       ├── ci.yml                     # Terraform PR Insights (Checkov, TFLint, Plan)
+│       └── documentation.yml          # Automated Documentation Sync via terraform-docs
+├── 📁 .terraform/                     # Terraform working directory
+├── 📁 assets/                         # Project documentation (diagrams, covers)
+├── 📁 frontend/                       # React.js web application [cite: 19, 20]
+│   ├── 📁 node_modules/               # Frontend dependencies
+│   ├── 📁 public/                     # Static assets (favicon, index.html)
+│   ├── 📁 src/                        # React source code
+│   │   ├── App.css                    # Styling for the dictionary UI
+│   │   ├── App.js                     # Main logic for search and API calls
+│   │   ├── index.css                  # Global base styles
+│   │   └── index.js                   # React entry point
+│   ├── .gitignore                     # Frontend-specific git ignore rules
+│   ├── package-lock.json              # Locked versions of npm dependencies
+│   ├── package.json                   # Frontend scripts and dependency list
+│   └── README.md                      # Frontend-specific documentation
+├── 📁 lambda/                         # Serverless backend source
+│   └── index.py                        # Python handler for DynamoDB queries
+├── 📁 modules/                        # Modularized Terraform components
+│   ├── 📁 api/                        # API Gateway resources
+│   ├── 📁 app/                        # Amplify frontend resources
+│       └── amplify.yml                # Amplify build specification
+│   ├── 📁 database/                   # DynamoDB table & seeding logic
+│   └── 📁 lambda/                     # Lambda function & IAM policies
+│       └── 📁 lambda/                 # Serverless backend logic [cite: 26]
+│           ├── index.py               # Python script for dictionary search logic
+│           └── lambda_function.zip    # Deployment package created by Terraform
+│       ├── main.tf                    # Module-specific resources
+│       ├── outputs.tf                 # Values exported to the root
+│       ├── providers.tf               # Version constraints (No cloud block!)
+│       └── variables.tf               # Module inputs
+├── main.tf                            # Module configurations
+├── outputs.tf                         # CloudFront and API Gateway URLs for the user
+├── providers.tf                       # Terraform Cloud backend & version constraints
+├── variables.tf                       # Configurable project inputs (AWS Region, Tags)
+├── .pre-commit-config.yaml            # Local git-hook orchestration
+├── .tflint.hcl                        # TFLint AWS ruleset configuration
+├── .checkov.yml                       # Checkov scan ignore list
+├── .terraform-docs.yml                # Config for terraform documentation during workflow
+├── terraform.tfstate                  # Local state file (if not using cloud)
+├── terraform.tfstate.backup           # Previous state snapshot
+├── README.template.md                 # Documentation source template
+└── README.md                          # Project documentation (Auto-injected by terraform-docs)
 </pre>
 <div align="right"><a href="#readme-top">↑ Back to Top</a></div>
 
