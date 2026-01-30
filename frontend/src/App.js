@@ -24,7 +24,7 @@ function App() {
     try {
       const response = await fetch(`${API_URL}?term=${encodeURIComponent(formattedTerm)}`);
       const data = await response.json();
-      
+
       if (response.ok) {
         document.title = `${term} | Cloud Dictionary`;
         // Access data.Definition with capital D as defined in Terraform
@@ -42,12 +42,12 @@ function App() {
   return (
     <div className="App">
       {/* Main background container */}
-      <div className="container"> 
+      <div className="container">
         <h1>Cloud Dictionary</h1>
         <div className="search-container">
-          <input 
-            type="text" 
-            placeholder="Search cloud term (e.g. S3)..." 
+          <input
+            type="text"
+            placeholder="Search cloud term (e.g. S3)..."
             value={term}
             onChange={(e) => setTerm(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()} // Support Enter key
