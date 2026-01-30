@@ -1,0 +1,139 @@
+name: "Production Deployment"
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "**/*.tf"
+      - "modules/lambda/lambda/**"
+      - ".github/workflows/cd.yml"
+      - 'scripts/**'
+  workflow_dispatch:
+
+jobs:
+  # Detect what changed
+  detect-changes:
+    runs-on: ubuntu-latest
+    environment: prod
+    outputs:
+      infra: ${{ steps.filter.outputs.infra }}
+      has_state: ${{ steps.check-state.outputs.has_state }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            infra:
+              - '**.tf'
+              - 'lambda/**'
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      # Check if there is anything actually deployed in Terraform Cloud
+      - name: Check Terraform State
+        id: check-state
+        run: |
+          terraform init
+          # If 'state list' is empty, it returns nothing
+          if [ -z "$(terraform state list)" ]; then
+            echo "has_state=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_state=true" >> $GITHUB_OUTPUT
+          fi
+        env:
+          TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
+
+  # Wait for Terraform Cloud to complete the VCS-triggered run
+  terraform-cloud-wait:
+    needs: detect-changes
+    # ONLY run this if the 'infra' filter found changes
+    if: needs.detect-changes.outputs.infra == 'true'
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: Wait for TFC Apply
+        uses: binxio/tfe-run-wait-action@main
+        with:
+          action: wait
+          token: ${{ secrets.TF_API_TOKEN }}
+          organization: "my-terraform-aws-projects-2025"
+          workspace: "aws-terraform-cloud-dictionary" # Update this to match your TFC workspace name
+          clone_url: ${{ github.server_url }}/${{ github.repository }}.git
+          commit_sha: ${{ github.sha }}
+          branch: "main"
+
+  # Post-Deployment Verification
+  post-deploy:
+    # This runs if TFC-wait was successful OR if it was skipped
+    needs: [detect-changes, terraform-cloud-wait]
+    if: |
+      always() && !cancelled() &&
+      (needs.terraform-cloud-wait.result == 'success' || needs.terraform-cloud-wait.result == 'skipped')
+    runs-on: ubuntu-latest
+    environment: prod
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Fetch Data from Terraform Output
+        run: |
+          echo "AWS_REGION=$(terraform output -raw aws_region)" >> $GITHUB_ENV
+          echo "API_URL=$(terraform output -raw api_invoke_url)" >> $GITHUB_ENV
+          echo "AMPLIFY_URL=$(terraform output -raw amplify_app_url)" >> $GITHUB_ENV
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::871308866502:role/GitHubActionRole
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Wait for Amplify Build
+        run: |
+          echo "Terraform has triggered the Amplify Webhook."
+          echo "Sleeping for 180s to allow React build to complete..."
+          sleep 180
+
+      - name: Verify API Gateway & Lambda Health
+        run: |
+          echo "Testing API endpoint: ${{ env.API_URL }}/search?term=S3"
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" "${{ env.API_URL }}/search?term=S3")
+
+          if [ "$RESPONSE" -eq 200 ]; then
+            echo "✅ API Health Check Passed: Term 'S3' found."
+          else
+            echo "❌ API Health Check Failed with status: $RESPONSE"
+            exit 1
+          fi
+
+      - name: Verify Error Handling
+        run: |
+          echo "Testing non-existent term..."
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" "${{ env.API_URL }}/search?term=NONEXISTENT")
+
+          if [ "$RESPONSE" -eq 404 ]; then
+            echo "✅ Error Handling Verified: 404 returned correctly."
+          else
+            echo "❌ Error Handling Failed: Expected 404, got $RESPONSE"
+            exit 1
+          fi
+
+      - name: Deployment Summary
+        run: |
+          echo "### 🚀 Deployment Successful!" >> $GITHUB_STEP_SUMMARY
+          echo "- **API Endpoint:** ${{ env.API_URL }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Frontend URL:** ${{ env.AMPLIFY_URL }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status:** All health checks passed (200 OK & 404 Not Found)." >> $GITHUB_STEP_SUMMARY
