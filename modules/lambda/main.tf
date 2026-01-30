@@ -18,7 +18,7 @@ resource "aws_lambda_function" "dictionary_handler" {
 
   environment {
     variables = {
-      TABLE_NAME = aws_dynamodb_table.dictionary_table.name
+      TABLE_NAME = var.dynamodb_table_name
     }
   }
 }
@@ -45,7 +45,7 @@ resource "aws_iam_role_policy" "lambda_dynamo_policy" {
     Statement = [{
       Effect   = "Allow"
       Action   = ["dynamodb:GetItem", "dynamodb:Query"]
-      Resource = [aws_dynamodb_table.dictionary_table.arn]
+      Resource = [var.dynamodb_table_arn]
     }]
   })
 }
@@ -58,7 +58,7 @@ resource "aws_cloudwatch_log_group" "lambda_log_group" {
 }
 
 # Update the Lambda's IAM Policy
-# Ensure your Lambda role has the 'BasicExecutionRole' policy attached, 
+# Ensure your Lambda role has the 'BasicExecutionRole' policy attached,
 # or explicitly allow logging to this specific log group.
 resource "aws_iam_role_policy" "lambda_logging" {
   name = "lambda_logging_policy"

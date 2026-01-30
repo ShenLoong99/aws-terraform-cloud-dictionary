@@ -13,7 +13,7 @@ def lambda_handler(event, context):
 
     # Extract the search term from the query string (?term=S3)
     query_params = event.get('queryStringParameters')
-    
+
     if not query_params or 'term' not in query_params:
         print("Error: No search term provided in query parameters.")
         return {
@@ -33,7 +33,7 @@ def lambda_handler(event, context):
     try:
         # Query DynamoDB using the exact case-sensitive key 'Term'
         response = table.get_item(Key={'Term': search_term})
-        
+
         if 'Item' in response:
             print(f"Success: Found definition for {search_term}")
             return {

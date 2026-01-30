@@ -9,9 +9,9 @@
 
 <div align="center">
    <h1 align="center">📖 Serverless Cloud Dictionary</h1>
-   <p align="center"> 
-   <img src="assets/cover.jpg" alt="aws-serverless-cloud-directory-cover" width="800" /><br /> 
-   <strong>A Full-Stack Serverless Web Application for Instant Cloud Terminology Lookup</strong> <br /> 
+   <p align="center">
+   <img src="assets/cover.jpg" alt="aws-serverless-cloud-directory-cover" width="800" /><br />
+   <strong>A Full-Stack Serverless Web Application for Instant Cloud Terminology Lookup</strong> <br />
    <a href="#about-the-project"><strong>Explore the docs »</strong></a> </p>
 </div>
 <details>
@@ -34,13 +34,13 @@
 <p> This project automates the entire CI/CD lifecycle. When infrastructure changes occur (like API updates), a <strong>custom Terraform trigger</strong> fires a webhook to <strong>AWS Amplify</strong>, ensuring the frontend is always perfectly synced with the backend without manual redeployments. </p>
 <div align="right"><a href="#readme-top">↑ Back to Top</a></div>
 <h2 id="built-with">Built With</h2>
-<p> 
-    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" alt="react" width="45" height="45" style="margin: 10px;"/> 
+<p>
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" alt="react" width="45" height="45" style="margin: 10px;"/>
     <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="45" height="45" style="margin: 10px;"/>
-    <img src="https://raw.githubusercontent.com/weibeld/aws-icons-svg/main/q1-2022/Architecture-Service-Icons_01312022/Arch_Compute/48/Arch_AWS-Lambda_48.svg" alt="lambda" width="45" height="45" style="margin: 10px;"/> 
-    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/terraform/terraform-original.svg" alt="terraform" width="45" height="45" style="margin: 10px;"/> 
-    <img src="https://raw.githubusercontent.com/weibeld/aws-icons-svg/main/q1-2022/Architecture-Service-Icons_01312022/Arch_Database/48/Arch_Amazon-DynamoDB_48.svg" alt="dynamodb" width="45" height="45" style="margin: 10px;"/> 
-    <img src="https://raw.githubusercontent.com/weibeld/aws-icons-svg/main/q1-2022/Architecture-Service-Icons_01312022/Arch_App-Integration/Arch_48/Arch_ Amazon-API-Gateway_48.svg" alt="apigateway" width="45" height="45" style="margin: 10px;"/> 
+    <img src="https://raw.githubusercontent.com/weibeld/aws-icons-svg/main/q1-2022/Architecture-Service-Icons_01312022/Arch_Compute/48/Arch_AWS-Lambda_48.svg" alt="lambda" width="45" height="45" style="margin: 10px;"/>
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/terraform/terraform-original.svg" alt="terraform" width="45" height="45" style="margin: 10px;"/>
+    <img src="https://raw.githubusercontent.com/weibeld/aws-icons-svg/main/q1-2022/Architecture-Service-Icons_01312022/Arch_Database/48/Arch_Amazon-DynamoDB_48.svg" alt="dynamodb" width="45" height="45" style="margin: 10px;"/>
+    <img src="https://raw.githubusercontent.com/weibeld/aws-icons-svg/main/q1-2022/Architecture-Service-Icons_01312022/Arch_App-Integration/Arch_48/Arch_ Amazon-API-Gateway_48.svg" alt="apigateway" width="45" height="45" style="margin: 10px;"/>
 </p>
 <ul>
    <li><strong>React.js:</strong> Frontend UI with dynamic title updates and normalized search logic.</li>
@@ -92,12 +92,12 @@
 │   ├── lambda_function.zip       # Deployment package created by Terraform [cite: 26]
 │   └── .gitignore                # Lambda-specific git ignore rules
 ├── .terraform.lock.hcl           # Terraform dependency lock file
-├── amplify.tf                    # AWS Amplify hosting & build triggers 
-├── amplify.yml                   # Amplify build specification 
+├── amplify.tf                    # AWS Amplify hosting & build triggers
+├── amplify.yml                   # Amplify build specification
 ├── api_gateway.tf                # REST API endpoints & Lambda integration [cite: 22, 23]
 ├── database.tf                   # DynamoDB table & item definitions [cite: 33, 34]
 ├── lambda.tf                     # Lambda function config & IAM roles [cite: 27]
-├── main.tf                       # AWS provider configuration 
+├── main.tf                       # AWS provider configuration
 ├── outputs.tf                    # Defined output values (API URLs, etc.)
 ├── README.template.md            # Template for generating project documentation
 ├── terraform.tf                  # Terraform version requirements
@@ -177,11 +177,11 @@ export TF_VAR_github_token=&lt;your-github-token&gt;
 </ol>
 
 <h3 id="database-seeding">🗄️ Database Seeding</h3>
-<p> 
-    The infrastructure automatically populates <strong>30 core cloud computing terms</strong> into the DynamoDB table during the <code>terraform apply</code> process. This ensures the application is ready for immediate use upon deployment. 
+<p>
+    The infrastructure automatically populates <strong>30 core cloud computing terms</strong> into the DynamoDB table during the <code>terraform apply</code> process. This ensures the application is ready for immediate use upon deployment.
 </p>
 <p>
-    Data is injected using the <code>aws_dynamodb_table_item</code> resource with a <code>for_each</code> loop, mapping terms to their definitions with automated <strong>UPPERCASE</strong> normalization to ensure consistent search hits. 
+    Data is injected using the <code>aws_dynamodb_table_item</code> resource with a <code>for_each</code> loop, mapping terms to their definitions with automated <strong>UPPERCASE</strong> normalization to ensure consistent search hits.
 </p>
 <img src="assets/dynamodb-items.png" alt="dynamodb-items" width="800" />
 <div align="right"><a href="#readme-top">↑ Back to Top</a></div>
@@ -202,7 +202,7 @@ export TF_VAR_github_token=&lt;your-github-token&gt;
         <strong>Case-Insensitivity Check:</strong> Try searching for <code>s3</code> (lowercase) or <code>nAt GaTeWaY</code> (mixed case). The system will normalize these to match the database records.
     </li>
     <li>
-        <strong>Error Handling:</strong> Search for a term that does <strong>not</strong> exist in the dictionary (e.g., <code>Windows 95</code>). 
+        <strong>Error Handling:</strong> Search for a term that does <strong>not</strong> exist in the dictionary (e.g., <code>Windows 95</code>).
         <ul>
             <li>
                 <strong>Frontend Behavior:</strong> The UI will display a "Term not found" message within a styled error box.<br>

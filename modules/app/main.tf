@@ -8,13 +8,13 @@ resource "aws_amplify_app" "dictionary_frontend" {
 
   # Pass the API URL from Terraform to Amplify
   environment_variables = {
-    REACT_APP_API_URL   = "${aws_api_gateway_stage.prod.invoke_url}/search"
+    REACT_APP_API_URL   = "${var.api_invoke_url}/search"
     AMPLIFY_DIFF_DEPLOY = "false"
     NODE_VERSION        = "20" # Forces Amplify to use Node 20
   }
 
   # Auto-build settings
-  build_spec = file("amplify.yml")
+  build_spec = file("${path.module}/amplify.yml")
 }
 
 resource "aws_amplify_branch" "main" {

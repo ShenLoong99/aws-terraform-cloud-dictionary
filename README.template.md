@@ -1,5 +1,7 @@
 <a id="readme-top"></a>
 
+<div align="center">
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -7,12 +9,29 @@
 [![Unlicense License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-<div align="center">
-   <h1 align="center">📖 Serverless Cloud Dictionary</h1>
-   <p align="center"> 
-   <img src="assets/cover.png" alt="aws-serverless-cloud-directory-cover" width="800" /><br /> 
-   <strong>A Full-Stack Serverless Web Application for Instant Cloud Terminology Lookup</strong> <br /> 
-   <a href="#about-the-project"><strong>Explore the docs »</strong></a> </p>
+   <h1>📖 Serverless Cloud Dictionary</h1>
+   <img src="assets/cover.png" alt="aws-serverless-cloud-directory-cover" />
+   <p><strong>A Full-Stack Serverless Web Application for Instant Cloud Terminology Lookup</strong></p>
+
+![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
+![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+
+<br>
+
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)<br>
+[![Infrastructure CI][ci-shield]][ci-url]
+[![Production Deployment][cd-shield]][cd-url]
+[![Update Documentation][docs-shield]][docs-url]
+
+<br>
+
+![Last Commit](https://img.shields.io/github/last-commit/{{GITHUB_USER}}/{{REPO_NAME}}?style=for-the-badge)
+![Repo Size](https://img.shields.io/github/repo-size/{{GITHUB_USER}}/{{REPO_NAME}}?style=for-the-badge)
+![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?style=for-the-badge&logo=pre-commit&logoColor=white)
+[![Checkov Security](https://img.shields.io/badge/Checkov-Secured-brightgreen?style=for-the-badge&logo=checkov&logoColor=white)](https://github.com/{{GITHUB_USER}}/{{REPO_NAME}}/actions/workflows/ci.yml)
+
+   <a href="#about-the-project"><strong>Explore the docs »</strong></a>
 </div>
 <details>
    <summary>Table of Contents</summary>
@@ -22,11 +41,14 @@
       <li><a href="#use-cases">Use Cases</a></li>
       <li><a href="#architecture">Architecture</a></li>
       <li><a href="#file-structure">File Structure</a></li>
+      <li><a href="#technical">Technical Reference</a></li>
       <li><a href="#getting-started">Getting Started</a></li>
-      <li><a href="#usage">Usage & Testing</a></li>
+      <li><a href="#gitops">GitOps & CI/CD Workflow</a></li>
+      <li><a href="#usage">Usage</a></li>
       <li><a href="#roadmap">Roadmap</a></li>
-      <li><a href="#challenges">Challenges</a></li>
-      <li><a href="#cost-optimization">Cost Optimization</a></li>
+      <li><a href="#challenges-faced">Challenges</a></li>
+      <li><a href="#well-architected">Well Architected Framework</a></li>
+      <li><a href="#acknowledgements">Acknowledgements</a></li>
    </ol>
 </details>
 <h2 id="about-the-project">About The Project</h2>
@@ -34,13 +56,13 @@
 <p> This project automates the entire CI/CD lifecycle. When infrastructure changes occur (like API updates), a <strong>custom Terraform trigger</strong> fires a webhook to <strong>AWS Amplify</strong>, ensuring the frontend is always perfectly synced with the backend without manual redeployments. </p>
 <div align="right"><a href="#readme-top">↑ Back to Top</a></div>
 <h2 id="built-with">Built With</h2>
-<p> 
-    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" alt="react" width="45" height="45" style="margin: 10px;"/> 
+<p>
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" alt="react" width="45" height="45" style="margin: 10px;"/>
     <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="45" height="45" style="margin: 10px;"/>
-    <img src="https://raw.githubusercontent.com/weibeld/aws-icons-svg/main/q1-2022/Architecture-Service-Icons_01312022/Arch_Compute/48/Arch_AWS-Lambda_48.svg" alt="lambda" width="45" height="45" style="margin: 10px;"/> 
-    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/terraform/terraform-original.svg" alt="terraform" width="45" height="45" style="margin: 10px;"/> 
-    <img src="https://raw.githubusercontent.com/weibeld/aws-icons-svg/main/q1-2022/Architecture-Service-Icons_01312022/Arch_Database/48/Arch_Amazon-DynamoDB_48.svg" alt="dynamodb" width="45" height="45" style="margin: 10px;"/> 
-    <img src="https://raw.githubusercontent.com/weibeld/aws-icons-svg/main/q1-2022/Architecture-Service-Icons_01312022/Arch_App-Integration/Arch_48/Arch_ Amazon-API-Gateway_48.svg" alt="apigateway" width="45" height="45" style="margin: 10px;"/> 
+    <img src="https://raw.githubusercontent.com/weibeld/aws-icons-svg/main/q1-2022/Architecture-Service-Icons_01312022/Arch_Compute/48/Arch_AWS-Lambda_48.svg" alt="lambda" width="45" height="45" style="margin: 10px;"/>
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/terraform/terraform-original.svg" alt="terraform" width="45" height="45" style="margin: 10px;"/>
+    <img src="https://raw.githubusercontent.com/weibeld/aws-icons-svg/main/q1-2022/Architecture-Service-Icons_01312022/Arch_Database/48/Arch_Amazon-DynamoDB_48.svg" alt="dynamodb" width="45" height="45" style="margin: 10px;"/>
+    <img src="https://raw.githubusercontent.com/weibeld/aws-icons-svg/main/q1-2022/Architecture-Service-Icons_01312022/Arch_App-Integration/Arch_48/Arch_ Amazon-API-Gateway_48.svg" alt="apigateway" width="45" height="45" style="margin: 10px;"/>
 </p>
 <ul>
    <li><strong>React.js:</strong> Frontend UI with dynamic title updates and normalized search logic.</li>
@@ -92,12 +114,12 @@
 │   ├── lambda_function.zip       # Deployment package created by Terraform [cite: 26]
 │   └── .gitignore                # Lambda-specific git ignore rules
 ├── .terraform.lock.hcl           # Terraform dependency lock file
-├── amplify.tf                    # AWS Amplify hosting & build triggers 
-├── amplify.yml                   # Amplify build specification 
+├── amplify.tf                    # AWS Amplify hosting & build triggers
+├── amplify.yml                   # Amplify build specification
 ├── api_gateway.tf                # REST API endpoints & Lambda integration [cite: 22, 23]
 ├── database.tf                   # DynamoDB table & item definitions [cite: 33, 34]
 ├── lambda.tf                     # Lambda function config & IAM roles [cite: 27]
-├── main.tf                       # AWS provider configuration 
+├── main.tf                       # AWS provider configuration
 ├── outputs.tf                    # Defined output values (API URLs, etc.)
 ├── README.template.md            # Template for generating project documentation
 ├── terraform.tf                  # Terraform version requirements
@@ -106,13 +128,13 @@
 └── variables.tf                  # Input variables for GitHub tokens and regions
 </pre>
 <div align="right"><a href="#readme-top">↑ Back to Top</a></div>
+
 <h2 id="getting-started">Getting Started</h2>
 <h3>Prerequisites</h3>
 <ul>
-    <li>AWS CLI configured.</li>
-    <li>Terraform Cloud Account / Terraform Local CLI installed</li>
-    <li>Set to whatever <code>aws_region</code> you want in <code>variables.tf</code>.</li>
-    <li>A GitHub Personal Access Token (for Amplify access).</li>
+  <li>AWS CLI configured with Admin permissions.</li>
+  <li>Terraform CLI installed / Terraform Cloud account registered.</li>
+  <li><strong>Set your AWS Region:</strong> Set to whatever <code>aws_region</code> you want in <code>variables.tf</code>.</li>
 </ul>
 
 <h3>Terraform State Management</h3>
@@ -122,15 +144,10 @@
    <li>Terraform Local CLI</li>
 </ol>
 
-<h4>Terraform Cloud Configuration</h4>
-<p>If you choose Terraform Cloud, please follow the steps below:</p>
+<h3>Terraform Cloud State Management</h3>
 <ol>
-   <li>Create a new <strong>Workspace</strong> in Terraform Cloud.</li>
-   <li>
-        In the Variables tab, add the following <strong>Terraform Variables:</strong>
-        <ul>
-            <li><strong>TF_VAR_github_token</strong>: (from prerequisites, marked as Sensitive).</li>
-        </ul>
+   <li>Create a new <strong>Workspace</strong> with github version control workflow in Terraform Cloud.</li>
+   <li>In the Variables tab, add the following <strong>Terraform Variables:</strong>
    </li>
    <li>
     Add the following <strong>Environment Variables</strong> (AWS Credentials):
@@ -139,51 +156,144 @@
       <li><code>AWS_SECRET_ACCESS_KEY</code></li>
    </ul>
    </li>
-</ol>
-
-<h4>Terraform Local CLI Configuration</h4>
-<p>If you choose Terraform Local CLI, please follow the steps below:</p>
-<ol>
-   <li>
-      Comment the <code>backend</code> block in <code>terraform.tf</code>:
-      <pre># backend "remote" {
-#   hostname     = "app.terraform.io"
-#   organization = "&lt;your-terraform-organization-name&gt;"
-#   workspaces {
-#     name = "&lt;your-terraform-workspace-name&gt;"
-#   }
-# }</pre>
+    <li>
+      Run the command ni Terraform CLI:
+      <pre>terraform login</pre>
+    </li>
+    <li>Create a token and follow the steps in browser to complete the Terraform Cloud Connection.</li>
+    <li>
+      Add the <code>backend</code> block in <code>terraform</code> code block</code>:
+    <pre>backend "remote" {
+  hostname     = "app.terraform.io"
+  organization = &lt;your-organization-name&gt;
+  workspaces {
+    name = &lt;your-workspace-name&gt;
+  }
+}</pre>
    </li>
-   <li>
-    Add the following <strong>Environment Variables</strong> (AWS Credentials):
-    <pre>git bash command:
-export AWS_ACCESS_KEY_ID=&lt;your-aws-access-key-id&gt;
-export AWS_SECRET_ACCESS_KEY=&lt;your-aws-secret-access-key&gt;
-export TF_VAR_github_token=&lt;your-github-token&gt;
+    <li>
+      Run the command in Terraform CLI to migrate the state into Terraform Cloud:
+      <pre>terraform init -migrate-state</pre>
+    </li>
 </ol>
 
-<h3>Deployment</h3>
+<h3>Installation & Deployment</h3>
 <ol>
-   <li>Clone the repository.</li>
-   <li><strong>Terraform Cloud</strong> → <strong>Initialize & Apply:</strong> Push your code to GitHub. Terraform Cloud will automatically detect the change, run a <code>plan</code>, and wait for your approval.</li>
-   <li><strong>Terraform CLI</strong> → <strong>Initialize & Apply:</strong> Run <code>terraform init</code> → <code>terraform plan</code> → <code>terraform apply</code>, and wait for your approval.</li>
-   <li>
-      <strong>The Webhook Handshake:</strong> Once you approve the plan, Terraform will create the backend. It will then automatically trigger the <strong>AWS Amplify Webhook</strong> to start the frontend build.<br>
+    <li>
+        <strong>Clone the Repository:</strong>
+        <pre>git clone https://github.com/{{GITHUB_USER}}/{{REPO_NAME}}.git</pre>
+    </li>
+    <li>
+        <strong>Provision Infrastructure:</strong><br>
+        <strong>Terraform Cloud</strong> → <strong>Initialize & Apply:</strong> Push your code to GitHub. Terraform Cloud will automatically detect the change, run a <code>plan</code>, and wait for your approval.
+    </li>
+    <li>
+      <strong>The Webhook Handshake:</strong><br>
+      Once you approve the plan, Terraform will create the backend. It will then automatically trigger the <strong>AWS Amplify Webhook</strong> to start the frontend build.<br>
       <img src="assets/amplify-deployment-log.png" alt="amplify-deployment-log" width="800" />
    </li>
-   <li>
-      <strong>Pro-Tip:</strong>  Local Development To test changes without deploying to production, create a <code>.env.local</code> file in the <code>frontend/</code> directory. Populate it with the outputs from your Terraform apply (User Pool IDs, S3 Bucket name, etc.) to link your local dev server to your live AWS resources
-   </li>
+    <li>
+        <strong>Observe workflow:</strong><br>
+        <strong>GitHub (GitOps)</strong> → <strong>Github actions:</strong> Observe the process/workflow of CI/CD in the actions tab in GitHub.
+    </li>
 </ol>
+<div align="right"><a href="#readme-top">↑ Back to Top</a></div>
 
 <h3 id="database-seeding">🗄️ Database Seeding</h3>
-<p> 
-    The infrastructure automatically populates <strong>30 core cloud computing terms</strong> into the DynamoDB table during the <code>terraform apply</code> process. This ensures the application is ready for immediate use upon deployment. 
+<p>
+    The infrastructure automatically populates <strong>30 core cloud computing terms</strong> into the DynamoDB table during the <code>terraform apply</code> process. This ensures the application is ready for immediate use upon deployment.
 </p>
 <p>
-    Data is injected using the <code>aws_dynamodb_table_item</code> resource with a <code>for_each</code> loop, mapping terms to their definitions with automated <strong>UPPERCASE</strong> normalization to ensure consistent search hits. 
+    Data is injected using the <code>aws_dynamodb_table_item</code> resource with a <code>for_each</code> loop, mapping terms to their definitions with automated <strong>UPPERCASE</strong> normalization to ensure consistent search hits.
 </p>
 <img src="assets/dynamodb-items.png" alt="dynamodb-items" width="800" />
+<div align="right"><a href="#readme-top">↑ Back to Top</a></div>
+
+<h2 id="gitops">GitOps & CI/CD Workflow</h2>
+<p>This project uses a fully automated GitOps pipeline to ensure code quality and deployment reliability. The <strong>Pre-commit</strong> framework implements a "Shift-Left" strategy, ensuring that code is formatted, documented, and secure before it ever leaves your machine.</p>
+
+<h3>Workflow</h3>
+<ol>
+  <li>
+    <strong>Branch Protection Rulesets</strong><br>
+    To ensure high code quality and prevent unauthorized changes to the production environment, the <code>main</code> branch is governed by a <strong>GitHub Branch Ruleset</strong>.
+    <ul>
+      <li><strong>Pull Request Mandatory:</strong> No code can be pushed directly to <code>main</code>. All changes must originate from a feature branch and be merged via a Pull Request.</li>
+      <li><strong>Required Status Checks:</strong> The <code>Infrastructure CI</code> (Terraform Plan & Static Analysis) must pass successfully before a merge is permitted.</li>
+      <li><strong>Bypass Authority:</strong> The dedicated GitHub App is added to the Bypass List with "Always allow" permissions. This allows the bot to push documentation updates directly to <code>main</code> without being blocked by PR requirements.</li>
+    </ul>
+  </li>
+  <li>
+    <strong>Pre-commit</strong>
+    <ul>
+      <li><strong>Tool:</strong> Executes <code>terraform fmt</code>, <code>terraform validate</code>, <code>TFLint</code>, <code>terraform_docs</code> and <code>checkov</code> to ensure the code is clean.</li>
+      <li><strong>Trigger:</strong> Runs on every <strong>git commit</strong>.</li>
+      <li>
+        <strong>Outcome:</strong> If any check fails, the commit is blocked. You fix the error, re-add the file, and commit again.
+      </li>
+    </ul>
+  </li>
+  <li>
+    <strong>Continuous Integration (PR)</strong>
+    <ul>
+      <li><strong>Tool:</strong> Executes <code>terraform fmt -check</code>, <code>terraform validate</code> and <code>checkov</code>, then do <code>plan</code> and cost estimation and print it on PR.</li>
+      <li><strong>Trigger:</strong> Runs on every <strong>Pull Request</strong>.</li>
+      <li>
+        <strong>Outcome:</strong> This acts as the "Gatekeeper" before code is merged to <code>main</code>.
+      </li>
+    </ul>
+  </li>
+  <li>
+    <strong>Continuous Delivery (Deployment)</strong>
+    <ul>
+      <li><strong>Tool:</strong> Terraform Cloud + GitHub Actions OIDC.</li>
+      <li><strong>Trigger:</strong> Merges to the <code>main</code> branch.</li>
+      <li>
+        <strong>Outcome:</strong> The pipeline verifies the infrastructure state and runs a post-deployment health check.
+      </li>
+    </ul>
+  </li>
+  <li>
+    <strong>Dynamically update readme documentation</strong>
+    <ul>
+      <li><strong>Tool:</strong> <code>terraform_docs</code> + GitHub Actions.</li>
+      <li><strong>Trigger:</strong> Merges to the <code>main</code> branch.</li>
+      <li>
+        <strong>Outcome:</strong> The pipeline verifies the infrastructure state from Terraform Cloud, retrieve outputs from Terraform Cloud and update the readme documentation file dynamically.
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h3>Prerequisites for GitOps</h3>
+<ul>
+  <li><strong>Repository Secret <code>TF_API_TOKEN</code>:</strong> Required for GitHub to communicate with Terraform Cloud.</li>
+  <li><strong>Trigger:</strong> A GitHub Actions OIDC role (<code>GitHubActionRole</code>) allows the runner to verify AWS resources without long-lived keys.</li>
+  <li>
+      <strong>Automated Documentation via GitHub App:</strong> Instead of using a Personal Access Token (PAT) or the default <code>GITHUB_TOKEN</code>, this project uses a custom <strong>GitHub App</strong> for automated tasks.<br>
+      <table>
+         <thead>
+            <tr>
+               <td>Secret</td>
+               <td>Description</td>
+               <td>Source</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><code>BOT_APP_ID</code></td>
+               <td>The unique numerical ID assigned to GitHub App.</td>
+               <td>App Settings > General</td>
+            </tr>
+            <tr>
+               <td><code>BOT_PRIVATE_KEY</code></td>
+               <td>The full content of the generated <code>.pem</code> private key file.</td>
+               <td>App Settings > Private keys</td>
+            </tr>
+         </tbody>
+      </table>
+   </li>
+</ul>
 <div align="right"><a href="#readme-top">↑ Back to Top</a></div>
 
 <h2 id="usage">🧪 Usage & Testing</h2>
@@ -202,7 +312,7 @@ export TF_VAR_github_token=&lt;your-github-token&gt;
         <strong>Case-Insensitivity Check:</strong> Try searching for <code>s3</code> (lowercase) or <code>nAt GaTeWaY</code> (mixed case). The system will normalize these to match the database records.
     </li>
     <li>
-        <strong>Error Handling:</strong> Search for a term that does <strong>not</strong> exist in the dictionary (e.g., <code>Windows 95</code>). 
+        <strong>Error Handling:</strong> Search for a term that does <strong>not</strong> exist in the dictionary (e.g., <code>Windows 95</code>).
         <ul>
             <li>
                 <strong>Frontend Behavior:</strong> The UI will display a "Term not found" message within a styled error box.<br>
@@ -254,12 +364,83 @@ export TF_VAR_github_token=&lt;your-github-token&gt;
    </tbody>
 </table>
 <div align="right"><a href="#readme-top">↑ Back to Top</a></div>
-<h2 id="cost-optimization">Cost Optimization</h2>
-<ul>
-   <li><strong>On-Demand Scaling:</strong> DynamoDB set to <code>PAY_PER_REQUEST</code> to eliminate costs during idle time.</li>
-   <li><strong>Log Retention:</strong> CloudWatch logs are capped at 7 days to prevent storage cost accumulation.</li>
-   <li><strong>Memory Tuning:</strong> Lambda function restricted to 128MB (minimal cost) since the search logic is lightweight.</li>
-</ul>
+
+<h2 id="well-architected">🏛️ AWS Well-Architected Framework Alignment</h2>
+<p>
+  This project is built following the six pillars of the <strong>AWS Well-Architected Framework</strong>, ensuring a professional, scalable, and secure cloud-native application.
+</p>
+<table>
+   <thead>
+   <tr>
+      <th>Pillar</th>
+      <th>Project Implementation Details</th>
+   </tr>
+   </thead>
+   <tbody>
+   <tr>
+      <td><strong>1. Operational Excellence</strong></td>
+      <td>
+         <ul>
+         <li><strong>Infrastructure as Code (IaC):</strong> The entire stack is provisioned via Terraform, allowing for consistent and repeatable deployments.</li>
+         <li><strong>Automated CI/CD:</strong> Integrated AWS Amplify with GitHub for automated frontend builds and a <code>null_resource</code> trigger to sync backend changes.</li>
+         <li><strong>Observability:</strong> Configured dedicated CloudWatch Log Groups for the Lambda function with custom retention periods.</li>
+         </ul>
+      </td>
+   </tr>
+   <tr>
+      <td><strong>2. Security</strong></td>
+      <td>
+         <ul>
+         <li><strong>Least Privilege:</strong> IAM roles are scoped specifically to the resources required (e.g., Lambda only has <code>GetItem</code> access to the Dictionary table).</li>
+         <li><strong>Identity & Access Management:</strong> API Gateway uses IAM permissions for Lambda invocation, ensuring no unauthorized triggers.</li>
+         <li><strong>Data Protection:</strong> DynamoDB tables are private within the AWS environment, accessible only through the secure API layer.</li>
+         </ul>
+      </td>
+   </tr>
+   <tr>
+      <td><strong>3. Reliability</strong></td>
+      <td>
+         <ul>
+         <li><strong>Managed Services:</strong> Utilizes serverless services (DynamoDB, Lambda) which offer built-in high availability across Multiple Availability Zones.</li>
+         <li><strong>Data Recovery:</strong> Enabled <strong>Point-in-Time Recovery (PITR)</strong> for DynamoDB to protect against accidental deletions or data corruption.</li>
+         <li><strong>Zero-Touch Failover:</strong> AWS Amplify provides automatic failover for the frontend hosting.</li>
+         </ul>
+      </td>
+   </tr>
+   <tr>
+      <td><strong>4. Performance Efficiency</strong></td>
+      <td>
+         <ul>
+         <li><strong>Serverless Scaling:</strong> Lambda and API Gateway scale automatically to handle incoming request spikes without manual intervention.</li>
+         <li><strong>Optimized Storage:</strong> DynamoDB provides single-digit millisecond latency for term lookups.</li>
+         <li><strong>Global Content Delivery:</strong> AWS Amplify deploys the React frontend to a global CDN for low-latency user access.</li>
+         </ul>
+      </td>
+   </tr>
+   <tr>
+      <td><strong>5. Cost Optimization</strong></td>
+      <td>
+         <ul>
+         <li><strong>On-Demand Scaling:</strong> DynamoDB set to <code>PAY_PER_REQUEST</code> to eliminate costs during idle time.</li>
+         <li><strong>Log Retention:</strong> CloudWatch logs are capped at 7 days to prevent storage cost accumulation.</li>
+         <li><strong>Memory Tuning:</strong> Lambda function restricted to 128MB (minimal cost) since the search logic is lightweight.</li>
+         <li><strong>Pay-as-you-go:</strong> Using <code>PAY_PER_REQUEST</code> billing for DynamoDB and sub-second billing for Lambda eliminates idle resource costs.</li>
+         <li><strong>Log Retention:</strong> Automatic expiration of CloudWatch logs after 7 days prevents long-term storage cost accumulation.</li>
+         <li><strong>Right-Sizing:</strong> Lambda is configured with minimal memory (128MB) to optimize for the project's specific compute needs.</li>
+         </ul>
+      </td>
+   </tr>
+   <tr>
+      <td><strong>6. Sustainability</strong></td>
+      <td>
+         <ul>
+         <li><strong>Resource Minimization:</strong> By utilizing Serverless architecture, we maximize resource utilization and minimize the carbon footprint associated with idle server capacity.</li>
+         <li><strong>Managed Infrastructure:</strong> Offloading the physical infrastructure management to AWS reduces energy waste through highly optimized data center operations.</li>
+         </ul>
+      </td>
+   </tr>
+   </tbody>
+</table>
 <div align="right"><a href="#readme-top">↑ Back to Top</a></div>
 
 <h2 id="acknowledgements">Acknowledgements</h2>
