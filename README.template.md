@@ -102,7 +102,7 @@ aws-terraform-cloud-dictionary/
 │       └── documentation.yml          # Automated Documentation Sync via terraform-docs
 ├── 📁 .terraform/                     # Terraform working directory
 ├── 📁 assets/                         # Project documentation (diagrams, covers)
-├── 📁 frontend/                       # React.js web application [cite: 19, 20]
+├── 📁 frontend/                       # React.js web application
 │   ├── 📁 node_modules/               # Frontend dependencies
 │   ├── 📁 public/                     # Static assets (favicon, index.html)
 │   ├── 📁 src/                        # React source code
@@ -122,7 +122,7 @@ aws-terraform-cloud-dictionary/
 │       └── amplify.yml                # Amplify build specification
 │   ├── 📁 database/                   # DynamoDB table & seeding logic
 │   └── 📁 lambda/                     # Lambda function & IAM policies
-│       └── 📁 lambda/                 # Serverless backend logic [cite: 26]
+│       └── 📁 lambda/                 # Serverless backend logic
 │           ├── index.py               # Python script for dictionary search logic
 │           └── lambda_function.zip    # Deployment package created by Terraform
 │       ├── main.tf                    # Module-specific resources
