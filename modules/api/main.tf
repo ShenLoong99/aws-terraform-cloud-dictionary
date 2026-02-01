@@ -6,18 +6,21 @@ resource "aws_api_gateway_rest_api" "dictionary_api" {
   }
 }
 
+# Create the Request Validator
 resource "aws_api_gateway_request_validator" "validator" {
-  name                        = "params-validator"
+  name                        = "search-validator"
   rest_api_id                 = aws_api_gateway_rest_api.dictionary_api.id
   validate_request_parameters = true
 }
 
+# Search gateway resource
 resource "aws_api_gateway_resource" "search" {
   rest_api_id = aws_api_gateway_rest_api.dictionary_api.id
   parent_id   = aws_api_gateway_rest_api.dictionary_api.root_resource_id
   path_part   = "search"
 }
 
+# Get term gateway method
 resource "aws_api_gateway_method" "get_term" {
   rest_api_id = aws_api_gateway_rest_api.dictionary_api.id
   resource_id = aws_api_gateway_resource.search.id
@@ -26,6 +29,7 @@ resource "aws_api_gateway_method" "get_term" {
   authorization = "NONE"
 }
 
+# API gateway integrate with lambda
 resource "aws_api_gateway_integration" "lambda_integration" {
   rest_api_id = aws_api_gateway_rest_api.dictionary_api.id
   resource_id = aws_api_gateway_resource.search.id
@@ -36,6 +40,7 @@ resource "aws_api_gateway_integration" "lambda_integration" {
   uri                     = var.lambda_invoke_arn
 }
 
+# lambda permission
 resource "aws_lambda_permission" "apigw_lambda" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
@@ -44,6 +49,7 @@ resource "aws_lambda_permission" "apigw_lambda" {
   source_arn    = "${aws_api_gateway_rest_api.dictionary_api.execution_arn}/*/*"
 }
 
+# API gateway deployment
 resource "aws_api_gateway_deployment" "prod" {
   rest_api_id = aws_api_gateway_rest_api.dictionary_api.id
   description = "Deployed via Terraform on ${timestamp()}"
@@ -57,8 +63,23 @@ resource "aws_api_gateway_deployment" "prod" {
   }
 }
 
+# API gateway stage
 resource "aws_api_gateway_stage" "prod" {
-  deployment_id = aws_api_gateway_deployment.prod.id
-  rest_api_id   = aws_api_gateway_rest_api.dictionary_api.id
-  stage_name    = "prod"
+  deployment_id        = aws_api_gateway_deployment.prod.id
+  rest_api_id          = aws_api_gateway_rest_api.dictionary_api.id
+  stage_name           = "prod"
+  xray_tracing_enabled = true
+}
+
+# Enable Logging (Fixes CKV2_AWS_4)
+resource "aws_api_gateway_method_settings" "all" {
+  rest_api_id = aws_api_gateway_rest_api.dictionary_api.id
+  stage_name  = aws_api_gateway_stage.prod.stage_name
+  method_path = "*/*"
+
+  settings {
+    logging_level      = "INFO"
+    data_trace_enabled = true
+    metrics_enabled    = true
+  }
 }

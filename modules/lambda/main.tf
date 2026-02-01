@@ -35,6 +35,7 @@ resource "aws_lambda_function" "dictionary_handler" {
 resource "aws_sqs_queue" "lambda_dlq" {
   name                      = "CloudDictionary-DLQ"
   message_retention_seconds = 1209600 # 14 days
+  sqs_managed_sse_enabled   = true    # Enable Encryption using SQS-managed keys
 }
 
 # IAM Role for Lambda
