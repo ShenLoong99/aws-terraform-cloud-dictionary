@@ -16,11 +16,26 @@ resource "aws_lambda_function" "dictionary_handler" {
   timeout          = 60
   memory_size      = 128 # Minimum RAM (cheapest/free)
 
+  tracing_config {
+    mode = "Active"
+  }
+
+  dead_letter_config {
+    target_arn = aws_sqs_queue.lambda_dlq.arn
+  }
+
   environment {
     variables = {
       TABLE_NAME = var.dynamodb_table_name
     }
   }
+}
+
+# Create the SQS Queue to act as the DLQ
+resource "aws_sqs_queue" "lambda_dlq" {
+  name                      = "CloudDictionary-DLQ"
+  message_retention_seconds = 1209600 # 14 days
+  sqs_managed_sse_enabled   = true    # Enable Encryption using SQS-managed keys
 }
 
 # IAM Role for Lambda
@@ -74,6 +89,22 @@ resource "aws_iam_role_policy" "lambda_logging" {
         ]
         Effect   = "Allow"
         Resource = "${aws_cloudwatch_log_group.lambda_log_group.arn}:*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy" "lambda_sqs_policy" {
+  name = "LambdaDLQPolicy"
+  role = aws_iam_role.lambda_exec_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = "sqs:SendMessage"
+        Effect   = "Allow"
+        Resource = aws_sqs_queue.lambda_dlq.arn
       }
     ]
   })

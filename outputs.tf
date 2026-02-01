@@ -28,3 +28,8 @@ output "aws_region" {
   description = "The AWS region to deploy resources in"
   value       = var.aws_region
 }
+
+output "amplify_branch_name" {
+  description = "The name of the deployed branch"
+  value       = module.app.amplify_branch_name
+}

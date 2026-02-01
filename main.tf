@@ -8,6 +8,7 @@ locals {
   }
 }
 
+# API Gateway configuration module
 module "api" {
   source               = "./modules/api"
   default_tags         = local.common_tags
@@ -16,6 +17,7 @@ module "api" {
   lambda_function_name = module.lambda.lambda_function_name
 }
 
+# Amplify configuration module
 module "app" {
   source         = "./modules/app"
   github_token   = var.github_token
@@ -24,12 +26,14 @@ module "app" {
   api_invoke_url = module.api.api_invoke_url
 }
 
+# DynamoDB configuration module
 module "database" {
   source       = "./modules/database"
   default_tags = local.common_tags
   aws_region   = var.aws_region
 }
 
+# Lambda configuration module
 module "lambda" {
   source              = "./modules/lambda"
   default_tags        = local.common_tags

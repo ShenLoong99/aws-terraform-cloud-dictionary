@@ -3,10 +3,13 @@ skip-check:
   # API-Gateway-specific skips
   - CKV_AWS_76 # Ensure API Gateway has Access Logging enabled (Avoids CloudWatch ingestion costs)
   - CKV_AWS_309 # Ensure API GatewayV2 routes specify an authorization type (Not necessary, replaced with IAM)
+  - CKV_AWS_120 # Ensure API Gateway caching is enabled (not part of the Free Tier)
+  - CKV_AWS_225 # Ensure API Gateway method setting caching is enabled (Avoid paid feature based on the hourly uptime of the cache node)
+  - CKV2_AWS_51 # Ensure AWS API Gateway endpoints uses client certificate authentication (Avoid Complex and Costly)
 
   # Database-specific skips
   - CKV_AWS_28 # Ensure DynamoDB point in time recovery (backup) is enabled (Avoids ~$0.20 per GB / month.)
-  - CKV_AWS_119  # Ensure DynamoDB Tables are encrypted using a KMS Customer Managed CMK (Avoids $1/month per key)
+  - CKV_AWS_119 # Ensure DynamoDB Tables are encrypted using a KMS Customer Managed CMK (Avoids $1/month per key)
 
   # lambda-specific skips
   - CKV_AWS_117 # Ensure that AWS Lambda function is configured inside a VPC (Avoids ~$32/month (NAT Gateway))
@@ -17,6 +20,9 @@ skip-check:
   # Cloudwatch-specific skips
   - CKV_AWS_158 # Ensure that CloudWatch Log Group is encrypted by KMS (Avoid KMS cost)
   - CKV_AWS_338 # Ensure CloudWatch log groups retains logs for at least 1 year (Not necessary and save cost)
+
+  # WAF-specific skips
+  - CKV2_AWS_29 # Ensure public API gateway are protected by WAF  (Avoid WAF costs ~$5/month per Web ACL + $1 per rule)
 
   # GitHub Action skips
   - CKV2_GHA_1 # Ensure top-level permissions are not set to write-all (Intentional skip as the workflows requires the permission)
