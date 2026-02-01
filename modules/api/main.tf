@@ -1,6 +1,15 @@
 # This acts as the bridge between the React app and the Lambda.
 resource "aws_api_gateway_rest_api" "dictionary_api" {
   name = "CloudDictionaryAPI"
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_api_gateway_request_validator" "validator" {
+  name                        = "params-validator"
+  rest_api_id                 = aws_api_gateway_rest_api.dictionary_api.id
+  validate_request_parameters = true
 }
 
 resource "aws_api_gateway_resource" "search" {
@@ -10,9 +19,10 @@ resource "aws_api_gateway_resource" "search" {
 }
 
 resource "aws_api_gateway_method" "get_term" {
-  rest_api_id   = aws_api_gateway_rest_api.dictionary_api.id
-  resource_id   = aws_api_gateway_resource.search.id
-  http_method   = "GET"
+  rest_api_id = aws_api_gateway_rest_api.dictionary_api.id
+  resource_id = aws_api_gateway_resource.search.id
+  http_method = "GET"
+  # checkov:skip=CKV_AWS_59:Public search endpoint intended for portfolio access
   authorization = "NONE"
 }
 
