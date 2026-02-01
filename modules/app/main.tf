@@ -27,12 +27,14 @@ resource "aws_amplify_branch" "main" {
   framework = "React"
 }
 
+# Webhook to trigger from Terraform to Amplify
 resource "aws_amplify_webhook" "build_webhook" {
   app_id      = aws_amplify_app.dictionary_frontend.id
   branch_name = aws_amplify_branch.main.branch_name
   description = "Triggered by Terraform Cloud"
 }
 
+# Null resource
 resource "null_resource" "curl_webhook" {
   triggers = {
     always_run = timestamp()                                                           # This changes every single time you run terraform apply
