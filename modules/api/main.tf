@@ -33,33 +33,6 @@ resource "aws_api_gateway_method" "get_term" {
   }
 }
 
-# Create the IAM Role for API Gateway Logging
-resource "aws_iam_role" "api_gateway_logging" {
-  name = "APIGatewayCloudWatchLogsRole"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Action = "sts:AssumeRole"
-      Effect = "Allow"
-      Principal = {
-        Service = "apigateway.amazonaws.com"
-      }
-    }]
-  })
-}
-
-# Attach the AWS Managed Policy for API Gateway Logging
-resource "aws_iam_role_policy_attachment" "api_gateway_logging" {
-  role       = aws_iam_role.api_gateway_logging.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
-}
-
-# Register the Role ARN in API Gateway Account Settings
-resource "aws_api_gateway_account" "main" {
-  cloudwatch_role_arn = aws_iam_role.api_gateway_logging.arn
-}
-
 # API gateway integrate with lambda
 resource "aws_api_gateway_integration" "lambda_integration" {
   rest_api_id = aws_api_gateway_rest_api.dictionary_api.id
