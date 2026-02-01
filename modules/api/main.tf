@@ -7,7 +7,7 @@ resource "aws_api_gateway_rest_api" "dictionary_api" {
 }
 
 # Create the Request Validator
-resource "aws_api_gateway_request_validator" "validator" {
+resource "aws_api_gateway_request_validator" "dictionary_validator" {
   name                        = "search-validator"
   rest_api_id                 = aws_api_gateway_rest_api.dictionary_api.id
   validate_request_parameters = true
@@ -22,11 +22,15 @@ resource "aws_api_gateway_resource" "search" {
 
 # Get term gateway method
 resource "aws_api_gateway_method" "get_term" {
-  rest_api_id = aws_api_gateway_rest_api.dictionary_api.id
-  resource_id = aws_api_gateway_resource.search.id
-  http_method = "GET"
-  # checkov:skip=CKV_AWS_59:Public search endpoint intended for portfolio access
-  authorization = "NONE"
+  rest_api_id          = aws_api_gateway_rest_api.dictionary_api.id
+  resource_id          = aws_api_gateway_resource.search.id
+  http_method          = "GET"
+  authorization        = "NONE" # checkov:skip=CKV_AWS_59:Public search endpoint intended for portfolio access
+  request_validator_id = aws_api_gateway_request_validator.dictionary_validator.id
+
+  request_parameters = {
+    "method.request.querystring.term" = true # Ensures 'term' is present
+  }
 }
 
 # API gateway integrate with lambda
@@ -79,7 +83,7 @@ resource "aws_api_gateway_method_settings" "all" {
 
   settings {
     logging_level      = "INFO"
-    data_trace_enabled = true
+    data_trace_enabled = false
     metrics_enabled    = true
   }
 }

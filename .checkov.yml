@@ -4,6 +4,7 @@ skip-check:
   - CKV_AWS_76 # Ensure API Gateway has Access Logging enabled (Avoids CloudWatch ingestion costs)
   - CKV_AWS_309 # Ensure API GatewayV2 routes specify an authorization type (Not necessary, replaced with IAM)
   - CKV_AWS_120 # Ensure API Gateway caching is enabled (not part of the Free Tier)
+  - CKV_AWS_225 # Ensure API Gateway method setting caching is enabled (Avoid paid feature based on the hourly uptime of the cache node)
   - CKV2_AWS_51 # Ensure AWS API Gateway endpoints uses client certificate authentication (Avoid Complex and Costly)
 
   # Database-specific skips
