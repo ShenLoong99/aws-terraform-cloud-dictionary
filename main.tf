@@ -52,7 +52,5 @@ resource "aws_api_gateway_account" "main" {
   cloudwatch_role_arn = aws_iam_role.api_gateway_logging.arn
 
   # Reset the ARN in AWS on delete
-  lifecycle {
-    prevent_destroy = false
-  }
+  reset_on_delete = true
 }
