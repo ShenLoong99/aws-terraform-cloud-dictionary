@@ -17,6 +17,7 @@ resource "aws_amplify_app" "dictionary_frontend" {
   build_spec = file("${path.module}/amplify.yml")
 }
 
+# Declaration of Amplify branch configuration
 resource "aws_amplify_branch" "main" {
   app_id      = aws_amplify_app.dictionary_frontend.id
   branch_name = "main"
