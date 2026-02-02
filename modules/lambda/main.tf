@@ -94,6 +94,7 @@ resource "aws_iam_role_policy" "lambda_logging" {
   })
 }
 
+# IAM role policy assigned to DLQ
 resource "aws_iam_role_policy" "lambda_sqs_policy" {
   name = "LambdaDLQPolicy"
   role = aws_iam_role.lambda_exec_role.id
