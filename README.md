@@ -473,18 +473,24 @@ aws-terraform-cloud-dictionary/
 </ul>
 <div align="right"><a href="#readme-top">↑ Back to Top</a></div>
 
-[contributors-shield]: https://img.shields.io/github/contributors/aws-terraform-cloud-dictionary.svg?style=for-the-badge
-[contributors-url]: https://github.com/aws-terraform-cloud-dictionary/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/aws-terraform-cloud-dictionary.svg?style=for-the-badge
-[forks-url]: https://github.com/aws-terraform-cloud-dictionary/network/members
-[stars-shield]: https://img.shields.io/github/stars/aws-terraform-cloud-dictionary.svg?style=for-the-badge
-[stars-url]: https://github.com/aws-terraform-cloud-dictionary/stargazers
-[issues-shield]: https://img.shields.io/github/issues/aws-terraform-cloud-dictionary.svg?style=for-the-badge
-[issues-url]: https://github.com/aws-terraform-cloud-dictionary/issues
-[license-shield]: https://img.shields.io/github/license/aws-terraform-cloud-dictionary.svg?style=for-the-badge
-[license-url]: https://github.com/aws-terraform-cloud-dictionary/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/ShenLoong99/aws-terraform-cloud-dictionary.svg?style=for-the-badge
+[contributors-url]: https://github.com/ShenLoong99/aws-terraform-cloud-dictionary/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/ShenLoong99/aws-terraform-cloud-dictionary.svg?style=for-the-badge
+[forks-url]: https://github.com/ShenLoong99/aws-terraform-cloud-dictionary/network/members
+[stars-shield]: https://img.shields.io/github/stars/ShenLoong99/aws-terraform-cloud-dictionary.svg?style=for-the-badge
+[stars-url]: https://github.com/ShenLoong99/aws-terraform-cloud-dictionary/stargazers
+[issues-shield]: https://img.shields.io/github/issues/ShenLoong99/aws-terraform-cloud-dictionary.svg?style=for-the-badge
+[issues-url]: https://github.com/ShenLoong99/aws-terraform-cloud-dictionary/issues
+[license-shield]: https://img.shields.io/github/license/ShenLoong99/aws-terraform-cloud-dictionary.svg?style=for-the-badge
+[license-url]: https://github.com/ShenLoong99/aws-terraform-cloud-dictionary/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/si-kai-tan
+[linkedin-url]: {{LINKEDIN_URL}}
+[ci-shield]: https://github.com/ShenLoong99/aws-terraform-cloud-dictionary/actions/workflows/ci.yml/badge.svg
+[ci-url]: https://github.com/ShenLoong99/aws-terraform-cloud-dictionary/actions/workflows/ci.yml
+[cd-shield]: https://github.com/ShenLoong99/aws-terraform-cloud-dictionary/actions/workflows/cd.yml/badge.svg
+[cd-url]: https://github.com/ShenLoong99/aws-terraform-cloud-dictionary/actions/workflows/cd.yml
+[docs-shield]: https://github.com/ShenLoong99/aws-terraform-cloud-dictionary/actions/workflows/documentation.yml/badge.svg
+[docs-url]: https://github.com/ShenLoong99/aws-terraform-cloud-dictionary/actions/workflows/documentation.yml
 
 <!-- BEGIN_TF_DOCS -->
 
@@ -516,10 +522,10 @@ aws-terraform-cloud-dictionary/
 
 ## Inputs
 
-| Name                                                                  | Description                                       | Type     | Default            | Required |
-| --------------------------------------------------------------------- | ------------------------------------------------- | -------- | ------------------ | :------: |
-| <a name="input_aws_region"></a> [aws_region](#input_aws_region)       | The AWS region to deploy resources in             | `string` | `"ap-southeast-1"` |    no    |
-| <a name="input_github_token"></a> [github_token](#input_github_token) | GitHub token for Amplify to access the repository | `string` | n/a                |   yes    |
+| Name                                                                  | Description                                       | Type     | Default       | Required |
+| --------------------------------------------------------------------- | ------------------------------------------------- | -------- | ------------- | :------: |
+| <a name="input_aws_region"></a> [aws_region](#input_aws_region)       | The AWS region to deploy resources in             | `string` | `"us-east-1"` |    no    |
+| <a name="input_github_token"></a> [github_token](#input_github_token) | GitHub token for Amplify to access the repository | `string` | n/a           |   yes    |
 
 ## Outputs
 
