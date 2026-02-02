@@ -95,7 +95,6 @@
 <div align="right"><a href="#readme-top">↑ Back to Top</a></div>
 <h2 id="file-structure">File Structure</h2>
 <pre>aws-terraform-cloud-dictionary/
-aws-terraform-cloud-dictionary/
 ├── 📁 .github/                        # GitHub Action workflows for CI/CD
 │   └── workflows/                     # CI/CD Pipeline Definitions
 │       ├── cd.yml                     # Production Deployment (OIDC + S3 Sync)

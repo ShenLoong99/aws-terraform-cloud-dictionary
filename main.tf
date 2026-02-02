@@ -50,4 +50,9 @@ resource "aws_iam_role_policy_attachment" "api_gateway_logging" {
 # Register the Role ARN in API Gateway Account Settings
 resource "aws_api_gateway_account" "main" {
   cloudwatch_role_arn = aws_iam_role.api_gateway_logging.arn
+
+  # Reset the ARN in AWS on delete
+  lifecycle {
+    prevent_destroy = false
+  }
 }
