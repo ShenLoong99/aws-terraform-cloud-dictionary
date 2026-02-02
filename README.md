@@ -145,6 +145,62 @@ aws-terraform-cloud-dictionary/
 </pre>
 <div align="right"><a href="#readme-top">↑ Back to Top</a></div>
 
+<h2 id="technical">Technical Reference</h2>
+This section is automatically updated with the latest infrastructure details.
+<details>
+<summary><b>Detailed Infrastructure Specifications</b></summary>
+
+<!-- BEGIN_TF_DOCS -->
+
+## Requirements
+
+| Name                                                                     | Version |
+| ------------------------------------------------------------------------ | ------- |
+| <a name="requirement_terraform"></a> [terraform](#requirement_terraform) | >= 1.5  |
+| <a name="requirement_archive"></a> [archive](#requirement_archive)       | ~> 2.0  |
+| <a name="requirement_aws"></a> [aws](#requirement_aws)                   | ~> 5.0  |
+| <a name="requirement_null"></a> [null](#requirement_null)                | ~> 3.0  |
+
+## Modules
+
+| Name                                                        | Source             | Version |
+| ----------------------------------------------------------- | ------------------ | ------- |
+| <a name="module_api"></a> [api](#module_api)                | ./modules/api      | n/a     |
+| <a name="module_app"></a> [app](#module_app)                | ./modules/app      | n/a     |
+| <a name="module_database"></a> [database](#module_database) | ./modules/database | n/a     |
+| <a name="module_lambda"></a> [lambda](#module_lambda)       | ./modules/lambda   | n/a     |
+
+## Resources
+
+| Name                                                                                                                                                         | Type     |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| [aws_api_gateway_account.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_account)                              | resource |
+| [aws_iam_role.api_gateway_logging](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role)                                     | resource |
+| [aws_iam_role_policy_attachment.api_gateway_logging](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+
+## Inputs
+
+| Name                                                                  | Description                                       | Type     | Default       | Required |
+| --------------------------------------------------------------------- | ------------------------------------------------- | -------- | ------------- | :------: |
+| <a name="input_aws_region"></a> [aws_region](#input_aws_region)       | The AWS region to deploy resources in             | `string` | `"us-east-1"` |    no    |
+| <a name="input_github_token"></a> [github_token](#input_github_token) | GitHub token for Amplify to access the repository | `string` | n/a           |   yes    |
+
+## Outputs
+
+| Name                                                                                         | Description                             |
+| -------------------------------------------------------------------------------------------- | --------------------------------------- |
+| <a name="output_amplify_app_id"></a> [amplify_app_id](#output_amplify_app_id)                | ID of the Amplify App                   |
+| <a name="output_amplify_app_url"></a> [amplify_app_url](#output_amplify_app_url)             | The URL of the hosted React application |
+| <a name="output_amplify_branch_name"></a> [amplify_branch_name](#output_amplify_branch_name) | The name of the deployed branch         |
+| <a name="output_api_endpoint"></a> [api_endpoint](#output_api_endpoint)                      | The URL of the API Gateway stage        |
+| <a name="output_api_invoke_url"></a> [api_invoke_url](#output_api_invoke_url)                | The invoke URL of the API Gateway stage |
+| <a name="output_aws_region"></a> [aws_region](#output_aws_region)                            | The AWS region to deploy resources in   |
+| <a name="output_dynamodb_table_name"></a> [dynamodb_table_name](#output_dynamodb_table_name) | Name of the DynamoDB dictionary table   |
+
+<!-- END_TF_DOCS -->
+</details>
+<div align="right"><a href="#readme-top">↑ Back to Top</a></div>
+
 <h2 id="getting-started">Getting Started</h2>
 <h3>Prerequisites</h3>
 <ul>
@@ -491,52 +547,3 @@ aws-terraform-cloud-dictionary/
 [cd-url]: https://github.com/ShenLoong99/aws-terraform-cloud-dictionary/actions/workflows/cd.yml
 [docs-shield]: https://github.com/ShenLoong99/aws-terraform-cloud-dictionary/actions/workflows/documentation.yml/badge.svg
 [docs-url]: https://github.com/ShenLoong99/aws-terraform-cloud-dictionary/actions/workflows/documentation.yml
-
-<!-- BEGIN_TF_DOCS -->
-
-## Requirements
-
-| Name                                                                     | Version |
-| ------------------------------------------------------------------------ | ------- |
-| <a name="requirement_terraform"></a> [terraform](#requirement_terraform) | >= 1.5  |
-| <a name="requirement_archive"></a> [archive](#requirement_archive)       | ~> 2.0  |
-| <a name="requirement_aws"></a> [aws](#requirement_aws)                   | ~> 5.0  |
-| <a name="requirement_null"></a> [null](#requirement_null)                | ~> 3.0  |
-
-## Modules
-
-| Name                                                        | Source             | Version |
-| ----------------------------------------------------------- | ------------------ | ------- |
-| <a name="module_api"></a> [api](#module_api)                | ./modules/api      | n/a     |
-| <a name="module_app"></a> [app](#module_app)                | ./modules/app      | n/a     |
-| <a name="module_database"></a> [database](#module_database) | ./modules/database | n/a     |
-| <a name="module_lambda"></a> [lambda](#module_lambda)       | ./modules/lambda   | n/a     |
-
-## Resources
-
-| Name                                                                                                                                                         | Type     |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
-| [aws_api_gateway_account.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_account)                              | resource |
-| [aws_iam_role.api_gateway_logging](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role)                                     | resource |
-| [aws_iam_role_policy_attachment.api_gateway_logging](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
-
-## Inputs
-
-| Name                                                                  | Description                                       | Type     | Default       | Required |
-| --------------------------------------------------------------------- | ------------------------------------------------- | -------- | ------------- | :------: |
-| <a name="input_aws_region"></a> [aws_region](#input_aws_region)       | The AWS region to deploy resources in             | `string` | `"us-east-1"` |    no    |
-| <a name="input_github_token"></a> [github_token](#input_github_token) | GitHub token for Amplify to access the repository | `string` | n/a           |   yes    |
-
-## Outputs
-
-| Name                                                                                         | Description                             |
-| -------------------------------------------------------------------------------------------- | --------------------------------------- |
-| <a name="output_amplify_app_id"></a> [amplify_app_id](#output_amplify_app_id)                | ID of the Amplify App                   |
-| <a name="output_amplify_app_url"></a> [amplify_app_url](#output_amplify_app_url)             | The URL of the hosted React application |
-| <a name="output_amplify_branch_name"></a> [amplify_branch_name](#output_amplify_branch_name) | The name of the deployed branch         |
-| <a name="output_api_endpoint"></a> [api_endpoint](#output_api_endpoint)                      | The URL of the API Gateway stage        |
-| <a name="output_api_invoke_url"></a> [api_invoke_url](#output_api_invoke_url)                | The invoke URL of the API Gateway stage |
-| <a name="output_aws_region"></a> [aws_region](#output_aws_region)                            | The AWS region to deploy resources in   |
-| <a name="output_dynamodb_table_name"></a> [dynamodb_table_name](#output_dynamodb_table_name) | Name of the DynamoDB dictionary table   |
-
-<!-- END_TF_DOCS -->
