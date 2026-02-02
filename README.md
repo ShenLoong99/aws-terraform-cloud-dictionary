@@ -508,7 +508,11 @@ aws-terraform-cloud-dictionary/
 
 ## Resources
 
-No resources.
+| Name                                                                                                                                                         | Type     |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| [aws_api_gateway_account.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_account)                              | resource |
+| [aws_iam_role.api_gateway_logging](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role)                                     | resource |
+| [aws_iam_role_policy_attachment.api_gateway_logging](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 
 ## Inputs
 

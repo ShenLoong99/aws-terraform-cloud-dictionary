@@ -26,8 +26,6 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_api_invoke_url"></a> [api\_invoke\_url](#input\_api\_invoke\_url) | The invoke URL of the API Gateway stage | `string` | n/a | yes |
-| <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | The AWS region to deploy resources in | `string` | n/a | yes |
-| <a name="input_default_tags"></a> [default\_tags](#input\_default\_tags) | Extra tags to pass to the provider | `map(string)` | n/a | yes |
 | <a name="input_github_repo"></a> [github\_repo](#input\_github\_repo) | The URL of your frontend React repository | `string` | `"https://github.com/ShenLoong99/aws-terraform-cloud-dictionary"` | no |
 | <a name="input_github_token"></a> [github\_token](#input\_github\_token) | GitHub token for Amplify to access the repository | `string` | n/a | yes |
 
