@@ -145,6 +145,19 @@ aws-terraform-cloud-dictionary/
 </pre>
 <div align="right"><a href="#readme-top">↑ Back to Top</a></div>
 
+<h2 id="technical">Technical Reference</h2>
+This section is automatically updated with the latest infrastructure details.
+<details>
+<summary><b>Detailed Infrastructure Specifications</b></summary>
+
+<!-- BEGIN_TF_DOCS -->
+
+{{ .Content }}
+
+<!-- END_TF_DOCS -->
+</details>
+<div align="right"><a href="#readme-top">↑ Back to Top</a></div>
+
 <h2 id="getting-started">Getting Started</h2>
 <h3>Prerequisites</h3>
 <ul>
